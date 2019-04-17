@@ -1,11 +1,17 @@
 <template>
-
+    <button v-on:click="rollDice">Roll dices</button>
 </template>
 
 <script>
     export default {
-        name: "RollDice"
+        name: "RollDiceButton",
+        methods:{
+            rollDice(){
+                this.$store.commit('rollDices')
+            }
+        }
     }
+
 </script>
 
 <style scoped>

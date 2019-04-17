@@ -1,18 +1,21 @@
 <template>
   <div id="app">
-    <Dices/>
+    <game-dices/>
+    <roll-dice-button/>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import Dices from './components/dices/Dices'
+import RollDiceButton from './components/RollDice'
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
-    Dices
+    'game-dices':Dices,
+    'roll-dice-button': RollDiceButton
   }
 }
 </script>
