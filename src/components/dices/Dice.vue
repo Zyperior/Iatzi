@@ -1,39 +1,13 @@
 <template>
-    <div>
-      <div class="dice" v-if="dice.id === 1">
-        <DiceMark class="mark Center"></DiceMark>
-      </div>
-      <div class="dice" v-else-if="dice.id === 2">
-        <DiceMark class="mark UppLeft"></DiceMark>
-        <DiceMark class="mark LowRight"></DiceMark>
-      </div>
-      <div class="dice" v-else-if="dice.id === 3">
-        <DiceMark class="mark UppLeft"></DiceMark>
-        <DiceMark class="mark Center"></DiceMark>
-        <DiceMark class="mark LowRight"></DiceMark>
-      </div>
-      <div class="dice" v-else-if="dice.id === 4">
-        <DiceMark class="mark UppLeft"></DiceMark>
-        <DiceMark class="mark UppRight"></DiceMark>
-        <DiceMark class="mark LowLeft"></DiceMark>
-        <DiceMark class="mark LowRight"></DiceMark>
-      </div>
-      <div class="dice" v-else-if="dice.id === 5">
-        <DiceMark class="mark UppLeft"></DiceMark>
-        <DiceMark class="mark UppRight"></DiceMark>
-        <DiceMark class="mark Center"></DiceMark>
-        <DiceMark class="mark LowLeft"></DiceMark>
-        <DiceMark class="mark LowRight"></DiceMark>
-      </div>
-      <div class="dice" v-else-if="dice.id === 6">
-        <DiceMark class="mark UppLeft"></DiceMark>
-        <DiceMark class="mark UppRight"></DiceMark>
-        <DiceMark class="mark CenLeft"></DiceMark>
-        <DiceMark class="mark CenRight"></DiceMark>
-        <DiceMark class="mark LowLeft"></DiceMark>
-        <DiceMark class="mark LowRight"></DiceMark>
-      </div>
-    </div>
+  <div class="dice" v-bind:class="{locked: dice.locked}" @click="lockDice(index)">
+    <DiceMark class="mark Center" v-if="dice.id === 1 || dice.id === 3 || dice.id === 5"></DiceMark>
+    <DiceMark class="mark UppLeft" v-if="dice.id > 1 "></DiceMark>
+    <DiceMark class="mark LowRight" v-if="dice.id > 1 "></DiceMark>
+    <DiceMark class="mark UppRight" v-if="dice.id > 3 "></DiceMark>
+    <DiceMark class="mark LowLeft" v-if="dice.id > 3 "></DiceMark>
+    <DiceMark class="mark CenLeft" v-if="dice.id === 6"></DiceMark>
+    <DiceMark class="mark CenRight" v-if="dice.id === 6"></DiceMark>
+  </div>
 </template>
 
 <script>
@@ -41,10 +15,19 @@
 
     export default {
       name: "Dice",
-      props:['dice'],
-        components:{
-            DiceMark
+      props:[
+        'dice',
+        'index'
+      ],
+      components:{
+        DiceMark
+      },
+      methods:{
+        lockDice(index){
+          this.$store.commit('lockDice', index)
         }
+      }
+
     }
 </script>
 
@@ -59,6 +42,10 @@
 
     border: solid black 1vw;
     border-radius: 3vw;
+  }
+
+  .dice.locked{
+    background-color: lightgreen;
   }
 
   .mark.UppLeft{

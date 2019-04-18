@@ -1,7 +1,7 @@
 <template>
   <div class="dices" >
-    <div v-for="dice in currentDices">
-      <Dice v-bind:dice="dice"></Dice>
+    <div v-for="(dice, index) in currentDices">
+      <Dice v-bind:dice="dice" v-bind:index="index"></Dice>
     </div>
   </div>
 </template>
@@ -18,7 +18,8 @@
       currentDices() {
         return this.$store.state.currentDices
       }
-    }
+    },
+
   }
 
 

@@ -4,9 +4,6 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  data:{
-    rolledDice: Number
-  },
   state: {
       currentDices:[
         {id: 1, value: 1, locked: false},
@@ -29,6 +26,11 @@ export default new Vuex.Store({
 
           });
 
+      },
+
+      lockDice: function(state, index){
+          console.log(index);
+          state.currentDices[index].locked = !state.currentDices[index].locked;
       }
   },
   actions: {

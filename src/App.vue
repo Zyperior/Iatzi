@@ -8,7 +8,7 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import Dices from './components/dices/Dices'
-import RollDiceButton from './components/RollDice'
+import RollDiceButton from './components/dices/RollDice'
 
 export default {
   name: 'app',
