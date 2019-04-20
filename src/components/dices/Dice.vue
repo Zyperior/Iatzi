@@ -1,12 +1,12 @@
 <template>
-  <div class="dice" v-bind:class="{locked: dice.locked}" @click="lockDice(index)">
-    <DiceMark class="mark Center" v-if="dice.id === 1 || dice.id === 3 || dice.id === 5"></DiceMark>
-    <DiceMark class="mark UppLeft" v-if="dice.id > 1 "></DiceMark>
-    <DiceMark class="mark LowRight" v-if="dice.id > 1 "></DiceMark>
-    <DiceMark class="mark UppRight" v-if="dice.id > 3 "></DiceMark>
-    <DiceMark class="mark LowLeft" v-if="dice.id > 3 "></DiceMark>
-    <DiceMark class="mark CenLeft" v-if="dice.id === 6"></DiceMark>
-    <DiceMark class="mark CenRight" v-if="dice.id === 6"></DiceMark>
+  <div class="dice" v-bind:class="{diceLocked: dice.locked}" @click="lockDice(index)">
+    <DiceMark class="CenterMark" v-bind:dice-index="index" v-if="dice.id === 1 || dice.id === 3 || dice.id === 5 || !gameStarted"></DiceMark>
+    <DiceMark class="UppLeftMark" v-if="dice.id > 1 && gameStarted"></DiceMark>
+    <DiceMark class="LowRightMark" v-if="dice.id > 1 && gameStarted"></DiceMark>
+    <DiceMark class="UppRightMark" v-if="dice.id > 3 && gameStarted"></DiceMark>
+    <DiceMark class="LowLeftMark" v-if="dice.id > 3 && gameStarted"></DiceMark>
+    <DiceMark class="CenLeftMark" v-if="dice.id === 6 && gameStarted"></DiceMark>
+    <DiceMark class="CenRightMark" v-if="dice.id === 6 && gameStarted"></DiceMark>
   </div>
 </template>
 
@@ -21,6 +21,11 @@
       ],
       components:{
         DiceMark
+      },
+      computed:{
+        gameStarted(){
+          return this.$store.state.gameStarted;
+        }
       },
       methods:{
         lockDice(index){
@@ -44,41 +49,41 @@
     border-radius: 3vw;
   }
 
-  .dice.locked{
+  .diceLocked{
     background-color: lightgreen;
   }
 
-  .mark.UppLeft{
+  .UppLeftMark{
     grid-column-start: 1;
     grid-row-start: 1;
   }
 
-  .mark.UppRight{
+  .UppRightMark{
     grid-column-start: 3;
     grid-row-start: 1;
   }
 
-  .mark.CenLeft{
+  .CenLeftMark{
     grid-column-start: 1;
     grid-row-start: 2;
   }
 
-  .mark.Center{
+  .CenterMark{
     grid-column-start: 2;
     grid-row-start: 2;
   }
 
-  .mark.CenRight{
+  .CenRightMark{
     grid-column-start: 3;
     grid-row-start: 2;
   }
 
-  .mark.LowLeft{
+  .LowLeftMark{
     grid-column-start: 1;
     grid-row-start: 3;
   }
 
-  .mark.LowRight{
+  .LowRightMark{
     grid-column-start: 3;
     grid-row-start: 3;
   }

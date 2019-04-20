@@ -12,7 +12,6 @@ export default new Vuex.Store({
       {id: 4, value: 4, locked: false},
       {id: 5, value: 5, locked: false},
     ],
-    diceValueArray: [],
     possibleCombosUpper:[
       {id: 1, name:"Ones", score: 0},
       {id: 2, name:"Twos", score: 0},
@@ -31,12 +30,21 @@ export default new Vuex.Store({
       {id: 7, name:"Full house", score: 0},
       {id: 8, name:"Chance", score: 0},
       {id: 9, name:"Iatzi", score: 0},
-    ]
+    ],
+    diceValueArray: [],
+    imgURLs: [
+
+    ],
+    gameStarted: false
   },
   methods:{
 
   },
   mutations: {
+    startGame: function(state){
+      state.gameStarted = true;
+      this.commit('rollDices')
+    },
     rollDices: function(state){
 
       //Reset array for dice values
@@ -46,23 +54,19 @@ export default new Vuex.Store({
       state.possibleCombosUpper.forEach((dice)=>{ Vue.set(dice, 'score', 0)});
       state.possibleCombosLower.forEach((dice)=>{ Vue.set(dice, 'score', 0)});
 
-      //Loop through each dice
+      //Loop through each dice with outer
       state.currentDices.forEach(function(dice) {
 
-        //If the dice isnt locked
-        if(dice.locked === false){
+        if(!dice.locked){
 
           //Set a random value between 1-6 (Roll a dice)
           let rolledDiceId = Math.floor((Math.random() * 6) +1);
 
-          //Set the dice id and value to that of the rolled dice
           Vue.set(dice, 'id', rolledDiceId);
           Vue.set(dice, 'value', rolledDiceId);
         }
 
-        //Add the dice to the array for dice values
         state.diceValueArray.push(dice.value)
-
       });
 
       //Sort the dice value array and add it to a simplified name
@@ -70,8 +74,6 @@ export default new Vuex.Store({
 
       //Set a counting array for how many of each possible value there is.
       let diceCount = [0,0,0,0,0,0];
-
-      //Loop through the dice value array
       for(let i = 0; i < sortedValues.length; i++){
         //Increase the value of the index in the counting array that matches the value in dice value array
         diceCount[sortedValues[i]-1]++;
@@ -81,10 +83,8 @@ export default new Vuex.Store({
       let highestCount1 = 0;
       let highestCount2 = 0;
 
-      //Loop through the counting array
       for(let i = 0; i < diceCount.length; i++){
 
-        //If the current dice total count is more than 0
         if(diceCount[i] > 0){
           //Set the current dice Upper score to their total value
           Vue.set(state.possibleCombosUpper[i], 'score', diceCount[i]*(i+1));
@@ -188,13 +188,13 @@ export default new Vuex.Store({
         }
       }
 
-      else if(
+      if(
         diceCount[0] > 0 &&
         diceCount[1] > 0 &&
         diceCount[2] > 0 &&
         diceCount[3] > 0 &&
         diceCount[4] > 0
-        ){
+      ){
         //Small straight
         Vue.set(state.possibleCombosLower[4], 'score', 15);
       }
@@ -218,13 +218,13 @@ export default new Vuex.Store({
 
       //Print to console for control
       console.clear();
-      console.log('Upper Scores');
+      console.log('Upper Section');
       state.possibleCombosUpper.forEach((combo)=>{
         if(combo.score !== 0)
-        console.log(combo.name + ' - Score: ' + combo.score)
+          console.log(combo.name + ' - Score: ' + combo.score)
       });
       console.log();
-      console.log('Lower Scores');
+      console.log('Lower Section');
       state.possibleCombosLower.forEach((combo)=>{
         if(combo.score !== 0)
           console.log(combo.name + ' - Score: ' + combo.score)
