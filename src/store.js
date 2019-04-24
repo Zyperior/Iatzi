@@ -31,6 +31,25 @@ export default new Vuex.Store({
       {id: 8, name:"Chance", score: 0},
       {id: 9, name:"Iatzi", score: 0},
     ],
+    scoreCard:[
+      {name: 'Ones', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Twos', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Threes', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Fours', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Fives', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Sixes', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Bonus', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Pair', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Two-Pair', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Three of a kind', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Four of a kind', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Small Straight', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Large Straight', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Full House', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Chance', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Iatzi', P1: -1, P2: -1, P3: -1, P4: -1},
+      {name: 'Total', P1: -1, P2: -1, P3: -1, P4: -1},
+    ],
     diceValueArray: [],
     imgURLs: [
 
@@ -47,7 +66,7 @@ export default new Vuex.Store({
     },
     rollDices: function(state){
 
-      //Reset array for dice values
+      // Reset array for dice values
       state.diceValueArray = [];
 
       //Reset all possible score values
@@ -60,7 +79,7 @@ export default new Vuex.Store({
         if(!dice.locked){
 
           //Set a random value between 1-6 (Roll a dice)
-          let rolledDiceId = Math.floor((Math.random() * 6) +1);
+          let rolledDiceId = Math.floor((Math.random() * 6) + 1);
 
           Vue.set(dice, 'id', rolledDiceId);
           Vue.set(dice, 'value', rolledDiceId);
@@ -76,7 +95,7 @@ export default new Vuex.Store({
       let diceCount = [0,0,0,0,0,0];
       for(let i = 0; i < sortedValues.length; i++){
         //Increase the value of the index in the counting array that matches the value in dice value array
-        diceCount[sortedValues[i]-1]++;
+        diceCount[sortedValues[i] - 1]++;
       }
 
       //Set variables to check what the two highest counts are in the counting array
@@ -87,7 +106,7 @@ export default new Vuex.Store({
 
         if(diceCount[i] > 0){
           //Set the current dice Upper score to their total value
-          Vue.set(state.possibleCombosUpper[i], 'score', diceCount[i]*(i+1));
+          Vue.set(state.possibleCombosUpper[i], 'score', diceCount[i]*(i + 1));
         }
 
         //Check each count value if they are higher than the current highest count
@@ -104,32 +123,32 @@ export default new Vuex.Store({
         }
       }
 
-      //Below we check the two highest counts if they match any of the possible combinations
+      // Below we check the two highest counts if they match any of the possible combinations
       if(diceCount[highestCount1] === 5){
 
         //Iatzi
         Vue.set(state.possibleCombosLower[8], 'score', 50);
 
         //Four of a kind
-        Vue.set(state.possibleCombosLower[3], 'score', 4*(highestCount1+1));
+        Vue.set(state.possibleCombosLower[3], 'score', 4 * (highestCount1 + 1));
 
         //Three of a kind
-        Vue.set(state.possibleCombosLower[2], 'score', 3*(highestCount1+1));
+        Vue.set(state.possibleCombosLower[2], 'score', 3 * (highestCount1 + 1));
 
         //Pair
-        Vue.set(state.possibleCombosLower[0], 'score', 2*(highestCount1+1))
+        Vue.set(state.possibleCombosLower[0], 'score', 2 *(highestCount1 + 1));
 
       }
       else if(diceCount[highestCount1] === 4){
 
         //Four of a kind
-        Vue.set(state.possibleCombosLower[3], 'score', 4*(highestCount1+1));
+        Vue.set(state.possibleCombosLower[3], 'score', 4 * (highestCount1 + 1));
 
         //Three of a kind
-        Vue.set(state.possibleCombosLower[2], 'score', 3*(highestCount1+1));
+        Vue.set(state.possibleCombosLower[2], 'score', 3 * (highestCount1 + 1));
 
         //Pair
-        Vue.set(state.possibleCombosLower[0], 'score', 2*(highestCount1+1));
+        Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount1 + 1));
 
       }
       else if(diceCount[highestCount1] === 3){
@@ -137,30 +156,30 @@ export default new Vuex.Store({
         if(diceCount[highestCount2] === 2){
 
           //Full house
-          Vue.set(state.possibleCombosLower[6], 'score', 3*(highestCount1+1) + 2*(highestCount2+1));
+          Vue.set(state.possibleCombosLower[6], 'score', 3 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
 
           //Three of a kind
-          Vue.set(state.possibleCombosLower[2], 'score', 3*(highestCount1+1));
+          Vue.set(state.possibleCombosLower[2], 'score', 3 * (highestCount1 + 1));
 
           //Two-pair
-          Vue.set(state.possibleCombosLower[1], 'score', 2*(highestCount1+1) + 2*(highestCount2+1));
+          Vue.set(state.possibleCombosLower[1], 'score', 2 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
 
           //Pair
           if(highestCount1 > highestCount2){
-            Vue.set(state.possibleCombosLower[0], 'score', 2*(highestCount1+1));
+            Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount1 + 1));
           }
           else{
-            Vue.set(state.possibleCombosLower[0], 'score', 2*(highestCount2+1));
+            Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount2 + 1));
           }
 
         }
         else{
 
           //Three of a kind
-          Vue.set(state.possibleCombosLower[2], 'score', 3*(highestCount1+1));
+          Vue.set(state.possibleCombosLower[2], 'score', 3 * (highestCount1 + 1));
 
           //Pair
-          Vue.set(state.possibleCombosLower[0], 'score', 2*(highestCount1+1));
+          Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount1 + 1));
 
         }
       }
@@ -169,21 +188,21 @@ export default new Vuex.Store({
         if(diceCount[highestCount2] === 2){
 
           //Two-pair
-          Vue.set(state.possibleCombosLower[1], 'score', 2*(highestCount1+1) + 2*(highestCount2+1));
+          Vue.set(state.possibleCombosLower[1], 'score', 2 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
 
           //Pair
           if(highestCount1 > highestCount2){
-            Vue.set(state.possibleCombosLower[0], 'score', 2*(highestCount1+1));
+            Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount1 + 1));
           }
           else{
-            Vue.set(state.possibleCombosLower[0], 'score', 2*(highestCount2+1));
+            Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount2 + 1));
           }
 
         }
         else{
 
           //Pair
-          Vue.set(state.possibleCombosLower[0], 'score', 2*(highestCount1+1));
+          Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount1 + 1));
 
         }
       }
@@ -211,7 +230,7 @@ export default new Vuex.Store({
 
       let chanceScore = 0;
       for(let i = 0; i < diceCount.length; i++){
-        chanceScore = chanceScore + (diceCount[i]*(i+1));
+        chanceScore = chanceScore + (diceCount[i]*(i + 1));
       }
       //Chance
       Vue.set(state.possibleCombosLower[7], 'score', chanceScore);

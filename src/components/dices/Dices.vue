@@ -34,4 +34,11 @@
     margin-inside: 10px;
 
   }
+
+  .dices{
+    display: grid;
+    grid-template-columns: repeat(5, 15vw);
+    justify-self: center;
+    justify-content: center;
+  }
 </style>

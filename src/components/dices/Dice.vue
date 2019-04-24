@@ -39,14 +39,14 @@
 <style scoped>
   .dice{
     display: grid;
-    grid-template-columns: 8vw 8vw 8vw;
-    grid-template-rows: 8vw 8vw 8vw;
-    max-width: 30vw;
+    grid-template-columns: 4vw 4vw 4vw;
+    grid-template-rows: 4vw 4vw 4vw;
+    max-width: 12vw;
     justify-items: center;
     align-items: center;
 
     border: solid black 1vw;
-    border-radius: 3vw;
+    border-radius: 1vw;
   }
 
   .diceLocked{

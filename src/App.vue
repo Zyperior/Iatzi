@@ -2,20 +2,21 @@
   <div id="app">
     <game-dices/>
     <roll-dice-button/>
+    <score-card/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 import Dices from './components/dices/Dices'
-import RollDiceButton from './components/dices/RollDice'
+import RollDiceButton from './components/RollDice'
+import ScoreCard from './components/ScoreCard'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
-    'game-dices':Dices,
-    'roll-dice-button': RollDiceButton
+    'game-dices': Dices,
+    'roll-dice-button': RollDiceButton,
+    'score-card': ScoreCard
   }
 }
 </script>
