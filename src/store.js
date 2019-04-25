@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -12,48 +12,27 @@ export default new Vuex.Store({
       {id: 4, value: 4, locked: false},
       {id: 5, value: 5, locked: false},
     ],
-    possibleCombosUpper:[
-      {id: 1, name:"Ones", score: 0},
-      {id: 2, name:"Twos", score: 0},
-      {id: 3, name:"Threes", score: 0},
-      {id: 4, name:"Fours", score: 0},
-      {id: 5, name:"Fives", score: 0},
-      {id: 6, name:"Sixes", score: 0}
-    ],
-    possibleCombosLower:[
-      {id: 1, name:"Pair", score: 0},
-      {id: 2, name:"Two-Pair", score: 0},
-      {id: 3, name:"Three of a kind", score: 0},
-      {id: 4, name:"Four of a kind", score: 0},
-      {id: 5, name:"Small straight", score: 0},
-      {id: 6, name:"Large straight", score: 0},
-      {id: 7, name:"Full house", score: 0},
-      {id: 8, name:"Chance", score: 0},
-      {id: 9, name:"Iatzi", score: 0},
-    ],
     scoreCard:[
-      {name: 'Ones', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Twos', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Threes', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Fours', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Fives', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Sixes', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Bonus', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Pair', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Two-Pair', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Three of a kind', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Four of a kind', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Small Straight', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Large Straight', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Full House', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Chance', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Iatzi', P1: -1, P2: -1, P3: -1, P4: -1},
-      {name: 'Total', P1: -1, P2: -1, P3: -1, P4: -1},
+      {id: 1, name:"Ones", possibleScore: 0, playerScore : [0, -1, -1, -1]},
+      {id: 2, name:"Twos", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 3, name:"Threes", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 4, name:"Fours", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 5, name:"Fives", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 6, name:"Sixes", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 7, name:"Bonus", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 8, name:"Pair", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 9, name:"Two-Pair", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 10, name:"Three of a kind", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 11, name:"Four of a kind", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 12, name:"Small straight", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 13, name:"Large straight", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 14, name:"Full house", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 15, name:"Chance", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 16, name:"Iatzi", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {id: 17, name:"Total", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
     ],
     diceValueArray: [],
-    imgURLs: [
-
-    ],
+    currentPlayerID: 1,
     gameStarted: false
   },
   methods:{
@@ -70,10 +49,8 @@ export default new Vuex.Store({
       state.diceValueArray = [];
 
       //Reset all possible score values
-      state.possibleCombosUpper.forEach((dice)=>{ Vue.set(dice, 'score', 0)});
-      state.possibleCombosLower.forEach((dice)=>{ Vue.set(dice, 'score', 0)});
+      state.scoreCard.forEach((dice)=>{ Vue.set(dice, 'possibleScore', 0)});
 
-      //Loop through each dice with outer
       state.currentDices.forEach(function(dice) {
 
         if(!dice.locked){
@@ -105,8 +82,8 @@ export default new Vuex.Store({
       for(let i = 0; i < diceCount.length; i++){
 
         if(diceCount[i] > 0){
-          //Set the current dice Upper score to their total value
-          Vue.set(state.possibleCombosUpper[i], 'score', diceCount[i]*(i + 1));
+          //Set the current dice "Upper" score to their total value
+          Vue.set(state.scoreCard[i], 'possibleScore', diceCount[i]*(i + 1));
         }
 
         //Check each count value if they are higher than the current highest count
@@ -127,28 +104,28 @@ export default new Vuex.Store({
       if(diceCount[highestCount1] === 5){
 
         //Iatzi
-        Vue.set(state.possibleCombosLower[8], 'score', 50);
+        Vue.set(state.scoreCard[15], 'possibleScore', 50);
 
         //Four of a kind
-        Vue.set(state.possibleCombosLower[3], 'score', 4 * (highestCount1 + 1));
+        Vue.set(state.scoreCard[10], 'possibleScore', 4 * (highestCount1 + 1));
 
         //Three of a kind
-        Vue.set(state.possibleCombosLower[2], 'score', 3 * (highestCount1 + 1));
+        Vue.set(state.scoreCard[9], 'possibleScore', 3 * (highestCount1 + 1));
 
         //Pair
-        Vue.set(state.possibleCombosLower[0], 'score', 2 *(highestCount1 + 1));
+        Vue.set(state.scoreCard[7], 'possibleScore', 2 *(highestCount1 + 1));
 
       }
       else if(diceCount[highestCount1] === 4){
 
         //Four of a kind
-        Vue.set(state.possibleCombosLower[3], 'score', 4 * (highestCount1 + 1));
+        Vue.set(state.scoreCard[10], 'possibleScore', 4 * (highestCount1 + 1));
 
         //Three of a kind
-        Vue.set(state.possibleCombosLower[2], 'score', 3 * (highestCount1 + 1));
+        Vue.set(state.scoreCard[9], 'possibleScore', 3 * (highestCount1 + 1));
 
         //Pair
-        Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount1 + 1));
+        Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
 
       }
       else if(diceCount[highestCount1] === 3){
@@ -156,30 +133,30 @@ export default new Vuex.Store({
         if(diceCount[highestCount2] === 2){
 
           //Full house
-          Vue.set(state.possibleCombosLower[6], 'score', 3 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
+          Vue.set(state.scoreCard[13], 'possibleScore', 3 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
 
           //Three of a kind
-          Vue.set(state.possibleCombosLower[2], 'score', 3 * (highestCount1 + 1));
+          Vue.set(state.scoreCard[9], 'possibleScore', 3 * (highestCount1 + 1));
 
           //Two-pair
-          Vue.set(state.possibleCombosLower[1], 'score', 2 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
+          Vue.set(state.scoreCard[8], 'possibleScore', 2 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
 
           //Pair
           if(highestCount1 > highestCount2){
-            Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount1 + 1));
+            Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
           }
           else{
-            Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount2 + 1));
+            Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount2 + 1));
           }
 
         }
         else{
 
           //Three of a kind
-          Vue.set(state.possibleCombosLower[2], 'score', 3 * (highestCount1 + 1));
+          Vue.set(state.scoreCard[9], 'possibleScore', 3 * (highestCount1 + 1));
 
           //Pair
-          Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount1 + 1));
+          Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
 
         }
       }
@@ -188,21 +165,21 @@ export default new Vuex.Store({
         if(diceCount[highestCount2] === 2){
 
           //Two-pair
-          Vue.set(state.possibleCombosLower[1], 'score', 2 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
+          Vue.set(state.scoreCard[8], 'possibleScore', 2 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
 
           //Pair
           if(highestCount1 > highestCount2){
-            Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount1 + 1));
+            Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
           }
           else{
-            Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount2 + 1));
+            Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount2 + 1));
           }
 
         }
         else{
 
           //Pair
-          Vue.set(state.possibleCombosLower[0], 'score', 2 * (highestCount1 + 1));
+          Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
 
         }
       }
@@ -215,7 +192,7 @@ export default new Vuex.Store({
         diceCount[4] > 0
       ){
         //Small straight
-        Vue.set(state.possibleCombosLower[4], 'score', 15);
+        Vue.set(state.scoreCard[11], 'possibleScore', 15);
       }
       else if(
         diceCount[1] > 0 &&
@@ -225,7 +202,7 @@ export default new Vuex.Store({
         diceCount[5] > 0
       ){
         //Large straight
-        Vue.set(state.possibleCombosLower[5], 'score', 20);
+        Vue.set(state.scoreCard[12], 'possibleScore', 20);
       }
 
       let chanceScore = 0;
@@ -233,27 +210,19 @@ export default new Vuex.Store({
         chanceScore = chanceScore + (diceCount[i]*(i + 1));
       }
       //Chance
-      Vue.set(state.possibleCombosLower[7], 'score', chanceScore);
+      Vue.set(state.scoreCard[14], 'possibleScore', chanceScore);
 
-      //Print to console for control
-      console.clear();
-      console.log('Upper Section');
-      state.possibleCombosUpper.forEach((combo)=>{
-        if(combo.score !== 0)
-          console.log(combo.name + ' - Score: ' + combo.score)
-      });
-      console.log();
-      console.log('Lower Section');
-      state.possibleCombosLower.forEach((combo)=>{
-        if(combo.score !== 0)
-          console.log(combo.name + ' - Score: ' + combo.score)
-      })
+
 
     },
 
+    setScore: function(state, index){
+
+      Vue.set(state.scoreCard[index].playerScore, state.currentPlayerID, state.scoreCard[index].possibleScore);
+
+    },
 
     lockDice: function(state, index){
-      console.log(index);
       state.currentDices[index].locked = !state.currentDices[index].locked;
     }
   },

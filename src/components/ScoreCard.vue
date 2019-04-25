@@ -33,7 +33,7 @@
     height: 97vh;
     position: fixed;
     z-index: 1;
-    background-color: rgb(227,210,185);
+    background-color: antiquewhite;
     box-shadow: 1vw 1vw 3vw black;
   }
 

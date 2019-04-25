@@ -1,22 +1,45 @@
 <template>
     <div class="scoreGrid">
       <div class="players bold">Players</div>
-      <div class="P">P1</div>
-      <div class="P">P2</div>
-      <div class="P">P3</div>
-      <div class="P">P4</div>
-      <div class="scoreTitles">
-        <div class="scoreTitle" v-for="score in scoreCard" v-bind:class="{bold : score.name === 'Bonus' || score.name === 'Total'}" >{{score.name}}</div>
+      <div class="P" v-bind:class="{active : currentPlayerID === 0}">P1</div>
+      <div class="P" v-bind:class="{active : currentPlayerID === 1}">P2</div>
+      <div class="P" v-bind:class="{active : currentPlayerID === 2}">P3</div>
+      <div class="P" v-bind:class="{active : currentPlayerID === 3}">P4</div>
+      <div class="scoreColumn">
+        <score-name class="scoreName" v-for="(score, index) in scoreCard"
+                    v-bind:score="score" v-bind:index="index"/>
+      </div>
+      <div class="scoreColumn">
+        <score class="score" v-for="score in scoreCard" v-bind:score="score.playerScore[0]"/>
+      </div>
+      <div class="scoreColumn">
+        <score class="score" v-for="score in scoreCard" v-bind:score="score.playerScore[1]"/>
+      </div>
+      <div class="scoreColumn">
+        <score class="score" v-for="score in scoreCard" v-bind:score="score.playerScore[2]"/>
+      </div>
+      <div class="scoreColumn">
+        <score class="score" v-for="score in scoreCard" v-bind:score="score.playerScore[3]"/>
       </div>
     </div>
 </template>
 
 <script>
+    import ScoreName from './ScoreName'
+    import Score from './Score'
     export default {
       name: "ScoreTable",
+      components:{
+        'score-name' : ScoreName,
+        'score' : Score
+      },
       computed: {
         scoreCard() {
           return this.$store.state.scoreCard
+        },
+
+        currentPlayerID(){
+          return this.$store.state.currentPlayerID
         }
       },
     }
@@ -25,27 +48,37 @@
 <style scoped>
   .scoreGrid{
     display: grid;
-    grid-template-columns: auto repeat(4, 10vw);
+    grid-template-columns: 35vw repeat(4, auto);
     grid-template-rows: 4vh auto;
     border-top: thin solid black;
   }
 
   .players{
+    text-align: start;
   }
 
-  .scoreTitles{
+  .active{
+    color: green;
+    text-shadow: 1px 1px black;
+  }
+
+  .scoreColumn{
     display: grid;
     grid-template-columns: auto;
     align-items: center;
 
   }
 
-  .scoreTitle{
+  .scoreName{
     text-align: start;
 
   }
 
   .bold{
     font-weight: bolder;
+  }
+
+  .possible{
+    background-color: lightgreen;
   }
 </style>

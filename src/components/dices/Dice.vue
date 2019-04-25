@@ -47,6 +47,8 @@
 
     border: solid black 1vw;
     border-radius: 1vw;
+
+    background-color: white;
   }
 
   .diceLocked{
