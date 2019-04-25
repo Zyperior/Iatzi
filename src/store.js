@@ -32,7 +32,7 @@ export default new Vuex.Store({
       {id: 17, name:"Total", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
     ],
     diceValueArray: [],
-    currentPlayerID: 1,
+    currentPlayer: {id: 0},
     gameStarted: false
   },
   methods:{
@@ -212,14 +212,21 @@ export default new Vuex.Store({
       //Chance
       Vue.set(state.scoreCard[14], 'possibleScore', chanceScore);
 
-
-
     },
 
     setScore: function(state, index){
+      Vue.set(state.scoreCard[index].playerScore, state.currentPlayer.id, state.scoreCard[index].possibleScore);
+      this.commit('nextPlayer');
+    },
 
-      Vue.set(state.scoreCard[index].playerScore, state.currentPlayerID, state.scoreCard[index].possibleScore);
+    nextPlayer: function(state){
+      let nextPlayer = state.currentPlayer.id + 1;
+      if(nextPlayer === 4){
+        nextPlayer = 0;
 
+      }
+
+      Vue.set(state.currentPlayer,'id', nextPlayer);
     },
 
     lockDice: function(state, index){

@@ -1,6 +1,6 @@
 <template>
   <div v-bind:class="{bold : score.name === 'Bonus' || score.name === 'Total',
-                      possible : score.possibleScore > 0 && score.playerScore[currentPlayerID] < 0}"
+                      possible : score.possibleScore > 0 && score.playerScore[currentPlayer.id] < 0}"
                       @click="setScore">{{score.name}}</div>
 </template>
 
@@ -9,8 +9,8 @@
       name: "scoreName",
       props: ['score', 'index'],
       computed:{
-        currentPlayerID(){
-          return this.$store.state.currentPlayerID
+        currentPlayer(){
+          return this.$store.state.currentPlayer
         }
       },
       methods:{

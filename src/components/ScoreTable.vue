@@ -1,25 +1,25 @@
 <template>
     <div class="scoreGrid">
       <div class="players bold">Players</div>
-      <div class="P" v-bind:class="{active : currentPlayerID === 0}">P1</div>
-      <div class="P" v-bind:class="{active : currentPlayerID === 1}">P2</div>
-      <div class="P" v-bind:class="{active : currentPlayerID === 2}">P3</div>
-      <div class="P" v-bind:class="{active : currentPlayerID === 3}">P4</div>
+      <div class="P" v-bind:class="{active : currentPlayer.id === 0}">P1</div>
+      <div class="P" v-bind:class="{active : currentPlayer.id === 1}">P2</div>
+      <div class="P" v-bind:class="{active : currentPlayer.id === 2}">P3</div>
+      <div class="P" v-bind:class="{active : currentPlayer.id === 3}">P4</div>
       <div class="scoreColumn">
         <score-name class="scoreName" v-for="(score, index) in scoreCard"
                     v-bind:score="score" v-bind:index="index"/>
       </div>
       <div class="scoreColumn">
-        <score class="score" v-for="score in scoreCard" v-bind:score="score.playerScore[0]"/>
+        <score v-for="score in scoreCard" v-bind:score="score.playerScore[0]"/>
       </div>
       <div class="scoreColumn">
-        <score class="score" v-for="score in scoreCard" v-bind:score="score.playerScore[1]"/>
+        <score v-for="score in scoreCard" v-bind:score="score.playerScore[1]"/>
       </div>
       <div class="scoreColumn">
-        <score class="score" v-for="score in scoreCard" v-bind:score="score.playerScore[2]"/>
+        <score v-for="score in scoreCard" v-bind:score="score.playerScore[2]"/>
       </div>
       <div class="scoreColumn">
-        <score class="score" v-for="score in scoreCard" v-bind:score="score.playerScore[3]"/>
+        <score v-for="score in scoreCard" v-bind:score="score.playerScore[3]"/>
       </div>
     </div>
 </template>
@@ -38,8 +38,8 @@
           return this.$store.state.scoreCard
         },
 
-        currentPlayerID(){
-          return this.$store.state.currentPlayerID
+        currentPlayer(){
+          return this.$store.state.currentPlayer
         }
       },
     }
