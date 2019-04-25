@@ -13,7 +13,7 @@ export default new Vuex.Store({
       {id: 5, value: 5, locked: false},
     ],
     scoreCard:[
-      {id: 1, name:"Ones", possibleScore: 0, playerScore : [0, -1, -1, -1]},
+      {id: 1, name:"Ones", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
       {id: 2, name:"Twos", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
       {id: 3, name:"Threes", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
       {id: 4, name:"Fours", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
@@ -214,9 +214,51 @@ export default new Vuex.Store({
 
     },
 
+    //If not "Bonus" or "Total" and if the score has not already been set
+    //Set score, calculate bonus and total points, cycle to next player
     setScore: function(state, index){
-      Vue.set(state.scoreCard[index].playerScore, state.currentPlayer.id, state.scoreCard[index].possibleScore);
-      this.commit('nextPlayer');
+      if(index !== 6 || index !== 16){
+        if(state.scoreCard[index].playerScore[state.currentPlayer.id] < 0){
+          Vue.set(state.scoreCard[index].playerScore, state.currentPlayer.id, state.scoreCard[index].possibleScore);
+          this.commit('checkBonus', state.currentPlayer.id);
+          this.commit('sumTotal', state.currentPlayer.id);
+          this.commit('nextPlayer');
+        }
+      }
+    },
+
+    checkBonus: function(state, playerID){
+      let sum = 0;
+      for(let i = 0; i < 6; i++){
+        let current = state.scoreCard[i].playerScore[playerID];
+        if(current === -1){
+          current = 0;
+        }
+
+        sum = sum + current;
+      }
+
+      if(sum > 66){
+        state.scoreCard[6].playerScore[playerID] = 50;
+      }
+    },
+
+    sumTotal: function(state, playerID) {
+      let sum = 0;
+      state.scoreCard.forEach(function(score){
+        if(score.name !== 'Total'){
+          let current = score.playerScore[playerID];
+          if(current === -1){
+            current = 0;
+          }
+
+          sum = sum + current;
+        }
+        else{
+          score.playerScore[playerID] = sum;
+        }
+      });
+
     },
 
     nextPlayer: function(state){
