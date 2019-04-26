@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button v-if="gameStarted" v-on:click="rollDice">Roll dices</button>
-    <button v-else v-on:click="startGame">Start game!</button>
+    <div v-if="gameStarted" @click="rollDice">Roll dices {{rollNumber.current}} / 3</div>
+    <div v-else @click="startGame">Start game!</div>
   </div>
 </template>
 
@@ -19,6 +19,10 @@
     computed:{
       gameStarted(){
         return this.$store.state.gameStarted
+      },
+
+      rollNumber: function () {
+        return this.$store.state.rollNumber;
       }
     }
   }

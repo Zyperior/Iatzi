@@ -22,6 +22,11 @@
       'score-card-dices': Dices,
       'score-card-roll' : RollDice,
       'score-table': ScoreTable
+    },
+    computed:{
+      gameStarted: function(){
+        return this.$store.state.gameStarted
+      }
     }
   }
 </script>
@@ -33,15 +38,19 @@
     height: 97vh;
     position: fixed;
     z-index: 1;
-    background-color: antiquewhite;
+    background-color: rgb(242,240,224);
     box-shadow: 1vw 1vw 3vw black;
   }
 
   .header{
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 10vh 10vh;
+    grid-template-rows: 10vh 10vh 10vh;
     border: solid black;
+  }
+
+  .invisible{
+    display:none;
   }
 
   @media screen and (min-width: 1200px) {

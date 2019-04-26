@@ -6,19 +6,19 @@
       <div class="P" v-bind:class="{active : currentPlayer.id === 2}">P3</div>
       <div class="P" v-bind:class="{active : currentPlayer.id === 3}">P4</div>
       <div class="scoreColumn">
-        <score-name class="scoreName" v-for="(score, index) in scoreCard"
+        <score-name  class="scoreName" v-for="(score, index) in scoreCard"
                     v-bind:score="score" v-bind:index="index"/>
       </div>
-      <div class="scoreColumn">
+      <div class="scoreColumn" v-bind:class="{active : currentPlayer.id === 0}">
         <score v-for="score in scoreCard" v-bind:score="score.playerScore[0]"/>
       </div>
-      <div class="scoreColumn">
+      <div class="scoreColumn" v-bind:class="{active : currentPlayer.id === 1}">
         <score v-for="score in scoreCard" v-bind:score="score.playerScore[1]"/>
       </div>
-      <div class="scoreColumn">
+      <div class="scoreColumn" v-bind:class="{active : currentPlayer.id === 2}">
         <score v-for="score in scoreCard" v-bind:score="score.playerScore[2]"/>
       </div>
-      <div class="scoreColumn">
+      <div class="scoreColumn" v-bind:class="{active : currentPlayer.id === 3}">
         <score v-for="score in scoreCard" v-bind:score="score.playerScore[3]"/>
       </div>
     </div>
@@ -49,7 +49,7 @@
   .scoreGrid{
     display: grid;
     grid-template-columns: 35vw repeat(4, auto);
-    grid-template-rows: 4vh auto;
+    grid-template-rows: 3.5vh auto;
     border-top: thin solid black;
   }
 
@@ -58,18 +58,20 @@
   }
 
   .active{
-    color: green;
-    text-shadow: 1px 1px black;
+    background-color: rgb(228,227,218);
   }
 
   .scoreColumn{
-    display: grid;
-    grid-template-columns: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
     align-items: center;
+    justify-content: space-evenly;
 
   }
 
   .scoreName{
+    min-width: 100%;
     text-align: start;
 
   }
@@ -78,7 +80,5 @@
     font-weight: bolder;
   }
 
-  .possible{
-    background-color: lightgreen;
-  }
+
 </style>

@@ -32,125 +32,95 @@ export default new Vuex.Store({
       {id: 17, name:"Total", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
     ],
     diceValueArray: [],
+    rollNumber: {current: 0},
     currentPlayer: {id: 0},
     gameStarted: false
   },
-  methods:{
-
-  },
   mutations: {
+
     startGame: function(state){
       state.gameStarted = true;
       this.commit('rollDices')
     },
+
     rollDices: function(state){
 
-      // Reset array for dice values
-      state.diceValueArray = [];
+      if(state.rollNumber.current < 3){
+        // Reset array for dice values
+        state.diceValueArray = [];
 
-      //Reset all possible score values
-      state.scoreCard.forEach((dice)=>{ Vue.set(dice, 'possibleScore', 0)});
+        //Reset all possible score values
+        state.scoreCard.forEach((dice)=>{ Vue.set(dice, 'possibleScore', 0)});
 
-      state.currentDices.forEach(function(dice) {
+        state.currentDices.forEach(function(dice) {
 
-        if(!dice.locked){
+          if(!dice.locked){
 
-          //Set a random value between 1-6 (Roll a dice)
-          let rolledDiceId = Math.floor((Math.random() * 6) + 1);
+            //Set a random value between 1-6 (Roll a dice)
+            let rolledDiceId = Math.floor((Math.random() * 6) + 1);
 
-          Vue.set(dice, 'id', rolledDiceId);
-          Vue.set(dice, 'value', rolledDiceId);
+            Vue.set(dice, 'id', rolledDiceId);
+            Vue.set(dice, 'value', rolledDiceId);
+          }
+
+          state.diceValueArray.push(dice.value)
+        });
+
+        //Sort the dice value array and add it to a simplified name
+        let sortedValues = state.diceValueArray.sort();
+
+        //Set a counting array for how many of each possible value there is.
+        let diceCount = [0,0,0,0,0,0];
+        for(let i = 0; i < sortedValues.length; i++){
+          //Increase the value of the index in the counting array that matches the value in dice value array
+          diceCount[sortedValues[i] - 1]++;
         }
 
-        state.diceValueArray.push(dice.value)
-      });
+        //Set variables to check what the two highest counts are in the counting array
+        let highestCount1 = 0;
+        let highestCount2 = 0;
 
-      //Sort the dice value array and add it to a simplified name
-      let sortedValues = state.diceValueArray.sort();
+        for(let i = 0; i < diceCount.length; i++){
 
-      //Set a counting array for how many of each possible value there is.
-      let diceCount = [0,0,0,0,0,0];
-      for(let i = 0; i < sortedValues.length; i++){
-        //Increase the value of the index in the counting array that matches the value in dice value array
-        diceCount[sortedValues[i] - 1]++;
-      }
+          if(diceCount[i] > 0){
+            //Set the current dice "Upper" score to their total value
+            Vue.set(state.scoreCard[i], 'possibleScore', diceCount[i]*(i + 1));
+          }
 
-      //Set variables to check what the two highest counts are in the counting array
-      let highestCount1 = 0;
-      let highestCount2 = 0;
-
-      for(let i = 0; i < diceCount.length; i++){
-
-        if(diceCount[i] > 0){
-          //Set the current dice "Upper" score to their total value
-          Vue.set(state.scoreCard[i], 'possibleScore', diceCount[i]*(i + 1));
+          //Check each count value if they are higher than the current highest count
+          if(diceCount[i] > diceCount[highestCount1]){
+            //If so, set the second highest count to that of the former highest count
+            highestCount2 = highestCount1;
+            //and set the highest count to the current index
+            highestCount1 = i;
+          }
+          //Else, check if each count are higher than the second highest count
+          else if(diceCount[i] > diceCount[highestCount2]){
+            //If so, set the second highest count to the current index
+            highestCount2 = i;
+          }
         }
 
-        //Check each count value if they are higher than the current highest count
-        if(diceCount[i] > diceCount[highestCount1]){
-          //If so, set the second highest count to that of the former highest count
-          highestCount2 = highestCount1;
-          //and set the highest count to the current index
-          highestCount1 = i;
-        }
-        //Else, check if each count are higher than the second highest count
-        else if(diceCount[i] > diceCount[highestCount2]){
-          //If so, set the second highest count to the current index
-          highestCount2 = i;
-        }
-      }
+        // Below we check the two highest counts if they match any of the possible combinations
+        if(diceCount[highestCount1] === 5){
 
-      // Below we check the two highest counts if they match any of the possible combinations
-      if(diceCount[highestCount1] === 5){
+          //Iatzi
+          Vue.set(state.scoreCard[15], 'possibleScore', 50);
 
-        //Iatzi
-        Vue.set(state.scoreCard[15], 'possibleScore', 50);
-
-        //Four of a kind
-        Vue.set(state.scoreCard[10], 'possibleScore', 4 * (highestCount1 + 1));
-
-        //Three of a kind
-        Vue.set(state.scoreCard[9], 'possibleScore', 3 * (highestCount1 + 1));
-
-        //Pair
-        Vue.set(state.scoreCard[7], 'possibleScore', 2 *(highestCount1 + 1));
-
-      }
-      else if(diceCount[highestCount1] === 4){
-
-        //Four of a kind
-        Vue.set(state.scoreCard[10], 'possibleScore', 4 * (highestCount1 + 1));
-
-        //Three of a kind
-        Vue.set(state.scoreCard[9], 'possibleScore', 3 * (highestCount1 + 1));
-
-        //Pair
-        Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
-
-      }
-      else if(diceCount[highestCount1] === 3){
-
-        if(diceCount[highestCount2] === 2){
-
-          //Full house
-          Vue.set(state.scoreCard[13], 'possibleScore', 3 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
+          //Four of a kind
+          Vue.set(state.scoreCard[10], 'possibleScore', 4 * (highestCount1 + 1));
 
           //Three of a kind
           Vue.set(state.scoreCard[9], 'possibleScore', 3 * (highestCount1 + 1));
 
-          //Two-pair
-          Vue.set(state.scoreCard[8], 'possibleScore', 2 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
-
           //Pair
-          if(highestCount1 > highestCount2){
-            Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
-          }
-          else{
-            Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount2 + 1));
-          }
+          Vue.set(state.scoreCard[7], 'possibleScore', 2 *(highestCount1 + 1));
 
         }
-        else{
+        else if(diceCount[highestCount1] === 4){
+
+          //Four of a kind
+          Vue.set(state.scoreCard[10], 'possibleScore', 4 * (highestCount1 + 1));
 
           //Three of a kind
           Vue.set(state.scoreCard[9], 'possibleScore', 3 * (highestCount1 + 1));
@@ -159,58 +129,95 @@ export default new Vuex.Store({
           Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
 
         }
-      }
-      else if(diceCount[highestCount1] === 2){
+        else if(diceCount[highestCount1] === 3){
 
-        if(diceCount[highestCount2] === 2){
+          if(diceCount[highestCount2] === 2){
 
-          //Two-pair
-          Vue.set(state.scoreCard[8], 'possibleScore', 2 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
+            //Full house
+            Vue.set(state.scoreCard[13], 'possibleScore', 3 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
 
-          //Pair
-          if(highestCount1 > highestCount2){
-            Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
+            //Three of a kind
+            Vue.set(state.scoreCard[9], 'possibleScore', 3 * (highestCount1 + 1));
+
+            //Two-pair
+            Vue.set(state.scoreCard[8], 'possibleScore', 2 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
+
+            //Pair
+            if(highestCount1 > highestCount2){
+              Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
+            }
+            else{
+              Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount2 + 1));
+            }
+
           }
           else{
-            Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount2 + 1));
+
+            //Three of a kind
+            Vue.set(state.scoreCard[9], 'possibleScore', 3 * (highestCount1 + 1));
+
+            //Pair
+            Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
+
           }
-
         }
-        else{
+        else if(diceCount[highestCount1] === 2){
 
-          //Pair
-          Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
+          if(diceCount[highestCount2] === 2){
 
+            //Two-pair
+            Vue.set(state.scoreCard[8], 'possibleScore', 2 * (highestCount1 + 1) + 2 * (highestCount2 + 1));
+
+            //Pair
+            if(highestCount1 > highestCount2){
+              Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
+            }
+            else{
+              Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount2 + 1));
+            }
+
+          }
+          else{
+
+            //Pair
+            Vue.set(state.scoreCard[7], 'possibleScore', 2 * (highestCount1 + 1));
+
+          }
         }
-      }
 
-      if(
-        diceCount[0] > 0 &&
-        diceCount[1] > 0 &&
-        diceCount[2] > 0 &&
-        diceCount[3] > 0 &&
-        diceCount[4] > 0
-      ){
-        //Small straight
-        Vue.set(state.scoreCard[11], 'possibleScore', 15);
-      }
-      else if(
-        diceCount[1] > 0 &&
-        diceCount[2] > 0 &&
-        diceCount[3] > 0 &&
-        diceCount[4] > 0 &&
-        diceCount[5] > 0
-      ){
-        //Large straight
-        Vue.set(state.scoreCard[12], 'possibleScore', 20);
-      }
+        if(
+          diceCount[0] > 0 &&
+          diceCount[1] > 0 &&
+          diceCount[2] > 0 &&
+          diceCount[3] > 0 &&
+          diceCount[4] > 0
+        ){
+          //Small straight
+          Vue.set(state.scoreCard[11], 'possibleScore', 15);
+        }
+        else if(
+          diceCount[1] > 0 &&
+          diceCount[2] > 0 &&
+          diceCount[3] > 0 &&
+          diceCount[4] > 0 &&
+          diceCount[5] > 0
+        ){
+          //Large straight
+          Vue.set(state.scoreCard[12], 'possibleScore', 20);
+        }
 
-      let chanceScore = 0;
-      for(let i = 0; i < diceCount.length; i++){
-        chanceScore = chanceScore + (diceCount[i]*(i + 1));
+        let chanceScore = 0;
+        for(let i = 0; i < diceCount.length; i++){
+          chanceScore = chanceScore + (diceCount[i]*(i + 1));
+        }
+        //Chance
+        Vue.set(state.scoreCard[14], 'possibleScore', chanceScore);
+
+        //Increase dice rollNumber
+        let currentRollNr = state.rollNumber.current;
+        currentRollNr++;
+        Vue.set(state.rollNumber, 'current', currentRollNr);
       }
-      //Chance
-      Vue.set(state.scoreCard[14], 'possibleScore', chanceScore);
 
     },
 
@@ -223,6 +230,8 @@ export default new Vuex.Store({
           this.commit('checkBonus', state.currentPlayer.id);
           this.commit('sumTotal', state.currentPlayer.id);
           this.commit('nextPlayer');
+
+          Vue.set(state.rollNumber, 'current', 1);
         }
       }
     },
@@ -274,8 +283,5 @@ export default new Vuex.Store({
     lockDice: function(state, index){
       state.currentDices[index].locked = !state.currentDices[index].locked;
     }
-  },
-  actions: {
-
   }
 })
