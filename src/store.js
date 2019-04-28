@@ -33,8 +33,11 @@ export default new Vuex.Store({
     ],
     diceValueArray : [],
     rollNumber : {current: 0},
-    players : {amount: 1, current: -1},
+    players : {amount: 1, current: -1, winner: -1},
     gameStarted : false,
+  },
+  methods:{
+
   },
   mutations: {
 
@@ -231,22 +234,74 @@ export default new Vuex.Store({
 
     },
 
+    nextPlayer: function(state){
+
+      state.currentDices.forEach((dice)=> {
+        dice.locked = false;
+      });
+      Vue.set(state.rollNumber, 'current', 0);
+
+      let nextPlayer = state.players.current + 1;
+
+      if(nextPlayer === state.players.amount){
+        nextPlayer = 0;
+
+      }
+
+      Vue.set(state.players,'current', nextPlayer);
+    },
+
+    winControl: function(state){
+
+      let totalScore = state.scoreCard[16];
+      let highestTotal = 0;
+      let winner = 0;
+
+      for(let i=0; i < state.players.amount; i++){
+        if(totalScore.playerScore[i] >  highestTotal){
+          highestTotal = totalScore.playerScore[i];
+          winner = i;
+        }
+      }
+      console.log(winner);
+      Vue.set(state.players, 'winner', winner);
+    }
+
+  },
+  actions:{
+
     //If round initialized and not "Bonus" or "Total" and if the score has not already been set
-    //Set score, calculate bonus and total points, cycle to next player
-    setScore: function(state, index){
+    //Set score, calculate bonus and total points,
+    //If final round, check who won, else cycle to next player
+    setScore: function({state}, index){
       if(state.rollNumber.current > 0){
         if(index !== 6 || index !== 16){
           if(state.scoreCard[index].playerScore[state.players.current] < 0){
-            Vue.set(state.scoreCard[index].playerScore, state.players.current, state.scoreCard[index].possibleScore);
-            this.commit('checkBonus', state.players.current);
-            this.commit('sumTotal', state.players.current);
-            this.commit('nextPlayer');
 
-            state.currentDices.forEach((dice)=> {
-              dice.locked = false;
+            Vue.set(state.scoreCard[index].playerScore, state.players.current, state.scoreCard[index].possibleScore);
+
+            let self = this;
+
+            self.dispatch('checkBonus', state.players.current).then(function(){
+
+              self.dispatch('sumTotal', state.players.current).then(function(){
+
+                self.dispatch('endGameControl').then(function () {
+
+                  self.commit('winControl');
+
+                },function () {
+
+                  self.commit('nextPlayer');
+
+                });
+
+              });
+
             });
 
-            Vue.set(state.rollNumber, 'current', 0);
+
+
           }
         }
       }
@@ -256,61 +311,74 @@ export default new Vuex.Store({
     //For the first 6 values of the current player scores, sum them (if not yet chosen, add 0)
     //If total sum is above 66, set Bonus to 50
     //If all have been chosen and still not over 66, set Bonus to 0
-    checkBonus: function(state, playerID){
+    checkBonus: function({state}, playerID){
+      return new Promise(function (resolve) {
+        if(state.scoreCard[6].playerScore[playerID] < 0){
+          let sum = 0;
+          let notYetChosen = 0;
+          for(let i = 0; i < 6; i++){
+            let current = state.scoreCard[i].playerScore[playerID];
+            if(current === -1){
+              notYetChosen++;
+              current = 0;
+            }
 
-      if(state.scoreCard[i].playerScore[playerID] < 0){
-        let sum = 0;
-        let notYetChosen = 0;
-        for(let i = 0; i < 6; i++){
-          let current = state.scoreCard[i].playerScore[playerID];
-          if(current === -1){
-            notYetChosen++;
-            current = 0;
+            sum = sum + current;
           }
 
-          sum = sum + current;
-        }
-
-        if(sum > 66){
-          state.scoreCard[6].playerScore[playerID] = 50;
-        }
-        else if(notYetChosen === 0){
-          state.scoreCard[6].playerScore[playerID] = 0;
-        }
-      }
-
-    },
-
-    sumTotal: function(state, playerID) {
-      let sum = 0;
-      state.scoreCard.forEach(function(score){
-        //Reset all possible scores to 0
-        Vue.set(score, 'possibleScore', 0);
-
-        if(score.name !== 'Total'){
-          let current = score.playerScore[playerID];
-          if(current === -1){
-            current = 0;
+          if(sum > 66){
+            state.scoreCard[6].playerScore[playerID] = 50;
           }
-
-          sum = sum + current;
+          else if(notYetChosen === 0){
+            state.scoreCard[6].playerScore[playerID] = 0;
+          }
         }
-        else{
-          score.playerScore[playerID] = sum;
-        }
+        resolve();
       });
 
     },
 
-    nextPlayer: function(state){
-      let nextPlayer = state.players.current + 1;
+    sumTotal: function({state}, playerID) {
 
-      if(nextPlayer === state.players.amount){
-        nextPlayer = 0;
+      return new Promise(resolve => {
 
-      }
+        let sum = 0;
+        state.scoreCard.forEach(function(score){
+          //Reset all possible scores to 0
+          Vue.set(score, 'possibleScore', 0);
 
-      Vue.set(state.players,'current', nextPlayer);
+          if(score.name !== 'Total'){
+            let current = score.playerScore[playerID];
+            if(current === -1){
+              current = 0;
+            }
+
+            sum = sum + current;
+          }
+          else{
+            score.playerScore[playerID] = sum;
+          }
+        });
+
+        resolve();
+
+      });
+
+    },
+
+    endGameControl: function({state}){
+
+      return new Promise((resolve, reject) => {
+        let lastPlayer = state.players.amount-1;
+        state.scoreCard.forEach((score)=>{
+
+          if(score.playerScore[lastPlayer] === -1){
+            reject();
+          }
+        });
+
+        resolve();
+      });
     },
 
   }

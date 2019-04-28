@@ -17,7 +17,7 @@
       },
       methods:{
         setScore(){
-          this.$store.commit('setScore', this.index)
+          this.$store.dispatch('setScore', this.index)
         }
       }
     }
