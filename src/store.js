@@ -31,17 +31,21 @@ export default new Vuex.Store({
       {id: 16, name:"Iatzi", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
       {id: 17, name:"Total", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
     ],
-    diceValueArray: [],
-    rollNumber: {current: 0},
-    currentPlayer: {id: -1},
-    gameStarted: false,
+    diceValueArray : [],
+    rollNumber : {current: 0},
+    players : {amount: 1, current: -1},
+    gameStarted : false,
   },
   mutations: {
 
+    setPlayerAmount: function(state, amount){
+      state.players.amount = amount;
+      console.log(state.players.amount)
+    },
+
     startGame: function(state){
       state.gameStarted = true;
-      Vue.set(state.currentPlayer, 'id', 0);
-      this.commit('rollDices');
+      Vue.set(state.players, 'current', 0);
     },
 
     rollDices: function(state){
@@ -222,17 +226,23 @@ export default new Vuex.Store({
 
     },
 
-    //If not "Bonus" or "Total" and if the score has not already been set
+    //If round initialized and not "Bonus" or "Total" and if the score has not already been set
     //Set score, calculate bonus and total points, cycle to next player
     setScore: function(state, index){
-      if(index !== 6 || index !== 16){
-        if(state.scoreCard[index].playerScore[state.currentPlayer.id] < 0){
-          Vue.set(state.scoreCard[index].playerScore, state.currentPlayer.id, state.scoreCard[index].possibleScore);
-          this.commit('checkBonus', state.currentPlayer.id);
-          this.commit('sumTotal', state.currentPlayer.id);
-          this.commit('nextPlayer');
+      if(state.rollNumber.current > 0){
+        if(index !== 6 || index !== 16){
+          if(state.scoreCard[index].playerScore[state.players.current] < 0){
+            Vue.set(state.scoreCard[index].playerScore, state.players.current, state.scoreCard[index].possibleScore);
+            this.commit('checkBonus', state.players.current);
+            this.commit('sumTotal', state.players.current);
+            this.commit('nextPlayer');
 
-          Vue.set(state.rollNumber, 'current', 1);
+            state.currentDices.forEach((dice)=> {
+              dice.locked = false;
+            });
+
+            Vue.set(state.rollNumber, 'current', 0);
+          }
         }
       }
     },
@@ -256,6 +266,9 @@ export default new Vuex.Store({
     sumTotal: function(state, playerID) {
       let sum = 0;
       state.scoreCard.forEach(function(score){
+        //Reset all possible scores to 0
+        Vue.set(score, 'possibleScore', 0);
+
         if(score.name !== 'Total'){
           let current = score.playerScore[playerID];
           if(current === -1){
@@ -272,17 +285,19 @@ export default new Vuex.Store({
     },
 
     nextPlayer: function(state){
-      let nextPlayer = state.currentPlayer.id + 1;
+      let nextPlayer = state.players.current + 1;
       if(nextPlayer === 4){
         nextPlayer = 0;
 
       }
 
-      Vue.set(state.currentPlayer,'id', nextPlayer);
+      Vue.set(state.players,'current', nextPlayer);
     },
 
     lockDice: function(state, index){
-      state.currentDices[index].locked = !state.currentDices[index].locked;
+      if(state.rollNumber.current > 0){
+        state.currentDices[index].locked = !state.currentDices[index].locked;
+      }
     }
   }
 })

@@ -1,24 +1,24 @@
 <template>
     <div class="scoreGrid">
       <div class="players bold">Players</div>
-      <div class="P" v-bind:class="{active : currentPlayer.id === 0}">P1</div>
-      <div class="P" v-bind:class="{active : currentPlayer.id === 1}">P2</div>
-      <div class="P" v-bind:class="{active : currentPlayer.id === 2}">P3</div>
-      <div class="P" v-bind:class="{active : currentPlayer.id === 3}">P4</div>
+      <div class="P" v-bind:class="{active : players.current === 0}">P1</div>
+      <div class="P" v-bind:class="{active : players.current === 1}">P2</div>
+      <div class="P" v-bind:class="{active : players.current === 2}">P3</div>
+      <div class="P" v-bind:class="{active : players.current === 3}">P4</div>
       <div class="scoreColumn">
         <score-name  class="scoreName" v-for="(score, index) in scoreCard"
                     v-bind:score="score" v-bind:index="index"/>
       </div>
-      <div class="scoreColumn" v-bind:class="{active : currentPlayer.id === 0}">
+      <div class="scoreColumn" v-bind:class="{active : players.current === 0}">
         <score v-for="score in scoreCard" v-bind:score="score.playerScore[0]"/>
       </div>
-      <div class="scoreColumn" v-bind:class="{active : currentPlayer.id === 1}">
+      <div class="scoreColumn" v-bind:class="{active : players.current === 1}">
         <score v-for="score in scoreCard" v-bind:score="score.playerScore[1]"/>
       </div>
-      <div class="scoreColumn" v-bind:class="{active : currentPlayer.id === 2}">
+      <div class="scoreColumn" v-bind:class="{active : players.current === 2}">
         <score v-for="score in scoreCard" v-bind:score="score.playerScore[2]"/>
       </div>
-      <div class="scoreColumn" v-bind:class="{active : currentPlayer.id === 3}">
+      <div class="scoreColumn" v-bind:class="{active : players.current === 3}">
         <score v-for="score in scoreCard" v-bind:score="score.playerScore[3]"/>
       </div>
     </div>
@@ -38,8 +38,8 @@
           return this.$store.state.scoreCard
         },
 
-        currentPlayer(){
-          return this.$store.state.currentPlayer
+        players(){
+          return this.$store.state.players
         }
       },
     }

@@ -2,8 +2,9 @@
   <div class="scoreCard">
     <section class="header">
       <score-card-title/>
-      <score-card-dices class="dices"/>
-      <score-card-roll class="roll"/>
+      <score-card-dices v-if="gameStarted" class="dices"/>
+      <score-card-roll class="roll" :invalid-amount="validAmount"/>
+      <select-players v-if="!gameStarted" @invalid-amount="amountIsValid"/>
     </section>
     <score-table/>
   </div>
@@ -14,18 +15,31 @@
   import Dices from './dices/Dices'
   import RollDice from './RollDice'
   import ScoreTable from './ScoreTable'
+  import SelectPlayers from './SelectPlayers'
 
   export default {
     name: "ScoreCard",
+    data(){
+      return{
+        validAmount : false
+      }
+    },
     components:{
       'score-card-title': ScoreCardTitle,
       'score-card-dices': Dices,
       'score-card-roll' : RollDice,
-      'score-table': ScoreTable
+      'score-table' : ScoreTable,
+      'select-players': SelectPlayers
     },
     computed:{
       gameStarted: function(){
         return this.$store.state.gameStarted
+      }
+    },
+    methods:{
+      amountIsValid: function (e) {
+        console.log(e);
+        this.validAmount = e;
       }
     }
   }
@@ -48,10 +62,6 @@
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: 8vh 9vh 5vh;
-  }
-
-  .invisible{
-    display:none;
   }
 
   @media screen and (min-width: 1200px) {
