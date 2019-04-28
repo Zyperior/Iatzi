@@ -47,6 +47,12 @@ export default new Vuex.Store({
       Vue.set(state.players, 'current', 0);
     },
 
+    lockDice: function(state, index){
+      if(state.rollNumber.current > 0){
+        state.currentDices[index].locked = !state.currentDices[index].locked;
+      }
+    },
+
     rollDices: function(state){
 
       if(state.rollNumber.current < 3){
@@ -246,20 +252,33 @@ export default new Vuex.Store({
       }
     },
 
+    //Check if Bonus has not already been set,
+    //For the first 6 values of the current player scores, sum them (if not yet chosen, add 0)
+    //If total sum is above 66, set Bonus to 50
+    //If all have been chosen and still not over 66, set Bonus to 0
     checkBonus: function(state, playerID){
-      let sum = 0;
-      for(let i = 0; i < 6; i++){
-        let current = state.scoreCard[i].playerScore[playerID];
-        if(current === -1){
-          current = 0;
+
+      if(state.scoreCard[i].playerScore[playerID] < 0){
+        let sum = 0;
+        let notYetChosen = 0;
+        for(let i = 0; i < 6; i++){
+          let current = state.scoreCard[i].playerScore[playerID];
+          if(current === -1){
+            notYetChosen++;
+            current = 0;
+          }
+
+          sum = sum + current;
         }
 
-        sum = sum + current;
+        if(sum > 66){
+          state.scoreCard[6].playerScore[playerID] = 50;
+        }
+        else if(notYetChosen === 0){
+          state.scoreCard[6].playerScore[playerID] = 0;
+        }
       }
 
-      if(sum > 66){
-        state.scoreCard[6].playerScore[playerID] = 50;
-      }
     },
 
     sumTotal: function(state, playerID) {
@@ -294,10 +313,5 @@ export default new Vuex.Store({
       Vue.set(state.players,'current', nextPlayer);
     },
 
-    lockDice: function(state, index){
-      if(state.rollNumber.current > 0){
-        state.currentDices[index].locked = !state.currentDices[index].locked;
-      }
-    }
   }
 })
