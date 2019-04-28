@@ -6,30 +6,30 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentDices:[
-      {id: 1, value: 1, locked: false},
-      {id: 2, value: 2, locked: false},
-      {id: 3, value: 3, locked: false},
-      {id: 4, value: 4, locked: false},
-      {id: 5, value: 5, locked: false},
+      {value: 1, locked: false, rolling: false},
+      {value: 2, locked: false, rolling: false},
+      {value: 3, locked: false, rolling: false},
+      {value: 4, locked: false, rolling: false},
+      {value: 5, locked: false, rolling: false},
     ],
     scoreCard:[
-      {id: 1, name:"Ones", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 2, name:"Twos", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 3, name:"Threes", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 4, name:"Fours", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 5, name:"Fives", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 6, name:"Sixes", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 7, name:"Bonus", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 8, name:"Pair", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 9, name:"Two-Pair", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 10, name:"Three of a kind", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 11, name:"Four of a kind", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 12, name:"Small straight", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 13, name:"Large straight", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 14, name:"Full house", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 15, name:"Chance", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 16, name:"Iatzi", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
-      {id: 17, name:"Total", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Ones", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Twos", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Threes", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Fours", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Fives", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Sixes", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Bonus", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Pair", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Two-Pair", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Three of a kind", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Four of a kind", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Small straight", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Large straight", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Full house", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Chance", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Iatzi", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
+      {name:"Total", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
     ],
     diceValueArray : [],
     rollNumber : {current: 0},
@@ -69,11 +69,16 @@ export default new Vuex.Store({
 
           if(!dice.locked){
 
-            //Set a random value between 1-6 (Roll a dice)
-            let rolledDiceId = Math.floor((Math.random() * 6) + 1);
+            Vue.set(dice, 'rolling', true);
 
-            Vue.set(dice, 'id', rolledDiceId);
-            Vue.set(dice, 'value', rolledDiceId);
+            let rollTimer = (Math.floor((Math.random() * 15)+1) * 100);
+            setTimeout(function () {
+              Vue.set(dice, 'rolling', false);
+            },rollTimer);
+            //Set a random value between 1-6 (Roll a dice)
+            let rolledDiceValue = Math.floor((Math.random() * 6) + 1);
+
+            Vue.set(dice, 'value', rolledDiceValue);
           }
 
           state.diceValueArray.push(dice.value)
@@ -295,13 +300,8 @@ export default new Vuex.Store({
                   self.commit('nextPlayer');
 
                 });
-
               });
-
             });
-
-
-
           }
         }
       }

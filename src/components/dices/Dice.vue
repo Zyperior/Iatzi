@@ -1,12 +1,12 @@
 <template>
-  <div class="dice" v-bind:class="{diceLocked: dice.locked}" @click="lockDice(index)">
-    <DiceMark class="CenterMark" v-bind:dice-index="index" v-if="dice.id === 1 || dice.id === 3 || dice.id === 5 || !gameStarted"></DiceMark>
-    <DiceMark class="UppLeftMark" v-if="dice.id > 1 && gameStarted"></DiceMark>
-    <DiceMark class="LowRightMark" v-if="dice.id > 1 && gameStarted"></DiceMark>
-    <DiceMark class="UppRightMark" v-if="dice.id > 3 && gameStarted"></DiceMark>
-    <DiceMark class="LowLeftMark" v-if="dice.id > 3 && gameStarted"></DiceMark>
-    <DiceMark class="CenLeftMark" v-if="dice.id === 6 && gameStarted"></DiceMark>
-    <DiceMark class="CenRightMark" v-if="dice.id === 6 && gameStarted"></DiceMark>
+  <div class="dice" v-bind:class="{diceLocked: dice.locked, animation : dice.rolling}" @click="lockDice(index)">
+    <DiceMark class="CenterMark" v-bind:dice-index="index" v-if="dice.value === 1 || dice.value === 3 || dice.value === 5 || !gameStarted"></DiceMark>
+    <DiceMark class="UppLeftMark" v-if="dice.value > 1 && gameStarted"></DiceMark>
+    <DiceMark class="LowRightMark" v-if="dice.value > 1 && gameStarted"></DiceMark>
+    <DiceMark class="UppRightMark" v-if="dice.value > 3 && gameStarted"></DiceMark>
+    <DiceMark class="LowLeftMark" v-if="dice.value > 3 && gameStarted"></DiceMark>
+    <DiceMark class="CenLeftMark" v-if="dice.value === 6 && gameStarted"></DiceMark>
+    <DiceMark class="CenRightMark" v-if="dice.value === 6 && gameStarted"></DiceMark>
   </div>
 </template>
 
@@ -88,6 +88,29 @@
   .LowRightMark{
     grid-column-start: 3;
     grid-row-start: 3;
+  }
+
+  .animation {
+    animation: square-to-circle 0.2s infinite cubic-bezier(1,.015,.295,1.225) ;
+  }
+
+  @keyframes square-to-circle {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(45deg);
+    }
+    50% {
+      border-radius: 50% 50% 50% 50%;
+      transform: rotate(90deg);
+    }
+    75% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   @media screen {
