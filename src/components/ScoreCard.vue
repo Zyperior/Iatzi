@@ -4,8 +4,8 @@
       <score-card-title/>
       <score-card-dices class="dices"/>
       <score-card-roll class="roll"/>
-      <score-table/>
     </section>
+    <score-table/>
   </div>
 </template>
 
@@ -34,19 +34,20 @@
 <style scoped>
   .scoreCard{
     display: grid;
+    grid-template-rows: 28vh auto;
     width: 95vw;
     height: 97vh;
     position: fixed;
     z-index: 1;
     background-color: rgb(242,240,224);
     box-shadow: 1vw 1vw 3vw black;
+    border: solid black;
   }
 
   .header{
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 10vh 10vh 10vh;
-    border: solid black;
+    grid-template-rows: 8vh 9vh 5vh;
   }
 
   .invisible{
