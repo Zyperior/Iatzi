@@ -39,8 +39,7 @@ export default new Vuex.Store({
   mutations: {
 
     setPlayerAmount: function(state, amount){
-      state.players.amount = amount;
-      console.log(state.players.amount)
+      state.players.amount = parseInt(amount);
     },
 
     startGame: function(state){
@@ -286,7 +285,8 @@ export default new Vuex.Store({
 
     nextPlayer: function(state){
       let nextPlayer = state.players.current + 1;
-      if(nextPlayer === 4){
+
+      if(nextPlayer === state.players.amount){
         nextPlayer = 0;
 
       }

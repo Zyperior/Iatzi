@@ -38,7 +38,6 @@
     },
     methods:{
       amountIsValid: function (e) {
-        console.log(e);
         this.validAmount = e;
       }
     }
