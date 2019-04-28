@@ -45,19 +45,19 @@
 
   .rollButton{
     display: flex;
-    min-width: 73vw;
-    min-height: 5vh;
-    max-width: 73vw;
+    min-width: 73vmin;
+    min-height: 5vmax;
+    max-width: 73vmin;
     background-color: white;
     justify-content: center;
     align-items: center;
-    font-size: 4vh;
-    border: solid black 1vw;
+    font-size: 4vmax;
+    border: solid black 1vmin;
   }
 
   .error{
     color: red;
-    font-size: 2.5vh;
+    font-size: 2.5vmax;
   }
 
 </style>

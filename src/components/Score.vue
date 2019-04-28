@@ -15,8 +15,8 @@
 
   .box{
     border-bottom: thin solid rgb(213,211,198);
-    min-width: 12vw;
-    min-height: 3vh;
+    min-width: 12vmin;
+    min-height: 3vmax;
   }
 
 </style>

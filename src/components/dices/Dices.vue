@@ -37,7 +37,7 @@
 
   .dices{
     display: grid;
-    grid-template-columns: repeat(5, 15vw);
+    grid-template-columns: repeat(5, 15vmin);
     justify-self: center;
     justify-content: center;
   }

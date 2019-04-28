@@ -45,22 +45,22 @@
 </script>
 
 <style scoped>
+
   .scoreCard{
     display: grid;
-    grid-template-rows: 28vh auto;
-    width: 95vw;
-    height: 97vh;
+    width: 95vmin;
+    height: 97vmax;
     position: fixed;
-    z-index: 1;
+    z-index: 999;
     background-color: rgb(242,240,224);
-    box-shadow: 1vw 1vw 3vw black;
+    box-shadow: 1vmin 1vmin 3vmin black;
     border: solid black;
   }
 
   .header{
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 8vh 9vh 5vh;
+    grid-template-rows: 8vmax 9vmax 5vmax;
   }
 
   @media screen and (min-width: 1200px) {

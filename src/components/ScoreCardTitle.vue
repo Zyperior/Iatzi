@@ -18,12 +18,12 @@
   .title{
     display: grid;
     grid-template-columns: repeat(5, auto);
-    padding-top: 2vh;
-    max-height: 7vh;
+    padding-top: 2vmax;
+    max-height: 7vmax;
     justify-self: center;
   }
   img{
-    max-height: 4vh;
-    margin-right: 1vw;
+    max-height: 4vmax;
+    margin-right: 1vmin;
   }
 </style>

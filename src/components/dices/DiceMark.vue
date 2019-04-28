@@ -22,10 +22,10 @@
 
 <style scoped>
   .letter{
-    max-width: 5vw;
+    max-width: 5vmin;
   }
 
   .mark{
-    max-width: 3vw;
+    max-width: 3vmin;
   }
 </style>

@@ -52,8 +52,8 @@
 <style scoped>
 
   .inputField{
-    max-width: 6vw;
-    padding-left: 4vw;
+    max-width: 6vmin;
+    padding-left: 4vmin;
   }
 
 </style>

@@ -48,8 +48,8 @@
 <style scoped>
   .scoreGrid{
     display: grid;
-    grid-template-columns: 35vw repeat(4, auto);
-    grid-template-rows: 3.5vh auto;
+    grid-template-columns: 35vmin repeat(4, auto);
+    grid-template-rows: 3.5vmax auto;
     border-top: thin solid black;
   }
 

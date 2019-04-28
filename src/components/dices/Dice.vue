@@ -39,14 +39,14 @@
 <style scoped>
   .dice{
     display: grid;
-    grid-template-columns: 4vw 4vw 4vw;
-    grid-template-rows: 4vw 4vw 4vw;
-    max-width: 12vw;
+    grid-template-columns: repeat(3, 4vmin);
+    grid-template-rows: repeat(3, 4vmin);
+    max-width: 12vmin;
     justify-items: center;
     align-items: center;
 
-    border: solid black 1vw;
-    border-radius: 1vw;
+    border: solid black 1vmin;
+    border-radius: 1vmin;
 
     background-color: white;
   }

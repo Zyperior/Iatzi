@@ -27,7 +27,7 @@
 
   div{
     border-bottom: thin solid rgb(213,211,198);
-    min-height: 3vh;
+    min-height: 3vmax;
   }
 
   .possible{
