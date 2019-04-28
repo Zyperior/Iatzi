@@ -33,14 +33,15 @@ export default new Vuex.Store({
     ],
     diceValueArray: [],
     rollNumber: {current: 0},
-    currentPlayer: {id: 0},
-    gameStarted: false
+    currentPlayer: {id: -1},
+    gameStarted: false,
   },
   mutations: {
 
     startGame: function(state){
       state.gameStarted = true;
-      this.commit('rollDices')
+      Vue.set(state.currentPlayer, 'id', 0);
+      this.commit('rollDices');
     },
 
     rollDices: function(state){
