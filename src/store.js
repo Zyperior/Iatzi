@@ -312,10 +312,14 @@ export default new Vuex.Store({
     //If total sum is above 66, set Bonus to 50
     //If all have been chosen and still not over 66, set Bonus to 0
     checkBonus: function({state}, playerID){
+
       return new Promise(function (resolve) {
+
         if(state.scoreCard[6].playerScore[playerID] < 0){
+
           let sum = 0;
           let notYetChosen = 0;
+
           for(let i = 0; i < 6; i++){
             let current = state.scoreCard[i].playerScore[playerID];
             if(current === -1){
@@ -327,10 +331,10 @@ export default new Vuex.Store({
           }
 
           if(sum > 66){
-            state.scoreCard[6].playerScore[playerID] = 50;
+            Vue.set(state.scoreCard[6].playerScore, playerID,50);
           }
           else if(notYetChosen === 0){
-            state.scoreCard[6].playerScore[playerID] = 0;
+            Vue.set(state.scoreCard[6].playerScore, playerID,0);
           }
         }
         resolve();
@@ -356,7 +360,7 @@ export default new Vuex.Store({
             sum = sum + current;
           }
           else{
-            score.playerScore[playerID] = sum;
+            Vue.set(score.playerScore, playerID, sum);
           }
         });
 

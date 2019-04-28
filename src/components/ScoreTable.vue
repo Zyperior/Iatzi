@@ -10,16 +10,16 @@
                     v-bind:score="score" v-bind:index="index"/>
       </div>
       <div class="scoreColumn" v-bind:class="{active : players.current === 0}">
-        <score v-for="score in scoreCard" v-bind:score="score.playerScore[0]"/>
+        <score v-for="score in scoreCard" v-bind:score="score.playerScore[0]" v-bind:player="0"/>
       </div>
       <div class="scoreColumn" v-bind:class="{active : players.current === 1}">
-        <score v-for="score in scoreCard" v-bind:score="score.playerScore[1]"/>
+        <score v-for="score in scoreCard" v-bind:score="score.playerScore[1]" v-bind:player="1"/>
       </div>
       <div class="scoreColumn" v-bind:class="{active : players.current === 2}">
-        <score v-for="score in scoreCard" v-bind:score="score.playerScore[2]"/>
+        <score v-for="score in scoreCard" v-bind:score="score.playerScore[2]" v-bind:player="2"/>
       </div>
       <div class="scoreColumn" v-bind:class="{active : players.current === 3}">
-        <score v-for="score in scoreCard" v-bind:score="score.playerScore[3]"/>
+        <score v-for="score in scoreCard" v-bind:score="score.playerScore[3]" v-bind:player="3"/>
       </div>
     </div>
 </template>
