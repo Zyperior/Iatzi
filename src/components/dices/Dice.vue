@@ -1,5 +1,10 @@
 <template>
-  <div class="dice" v-bind:class="{diceLocked: dice.locked, animation : dice.rolling}" @click="lockDice(index)">
+  <div class="dice" v-bind:class="{
+    diceLocked : dice.locked,
+    animation1 : dice.rolling === 1,
+    animation2 : dice.rolling === 2
+    }"
+       @click="lockDice(index)">
     <DiceMark class="CenterMark" v-bind:dice-index="index" v-if="dice.value === 1 || dice.value === 3 || dice.value === 5 || !gameStarted"></DiceMark>
     <DiceMark class="UppLeftMark" v-if="dice.value > 1 && gameStarted"></DiceMark>
     <DiceMark class="LowRightMark" v-if="dice.value > 1 && gameStarted"></DiceMark>
@@ -90,8 +95,12 @@
     grid-row-start: 3;
   }
 
-  .animation {
+  .animation1 {
     animation: square-to-circle 0.2s infinite cubic-bezier(1,.015,.295,1.225) ;
+  }
+
+  .animation2 {
+    animation: square-to-circle 0.2s infinite reverse cubic-bezier(1,.015,.295,1.225) ;
   }
 
   @keyframes square-to-circle {

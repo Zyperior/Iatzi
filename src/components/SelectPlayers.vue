@@ -1,7 +1,3 @@
-<!--Testing out Vuelidate in this file.
-    The validation is redundant because of input filters and limitation params
-    I will keep it in for example only-->
-
 <template>
   <label>
     Players <input class="inputField" type="text" maxlength="1" min="1" max="4" v-model="amount" @keydown="validateInput">

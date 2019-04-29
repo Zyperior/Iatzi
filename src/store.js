@@ -6,11 +6,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentDices:[
-      {value: 1, locked: false, rolling: false},
-      {value: 2, locked: false, rolling: false},
-      {value: 3, locked: false, rolling: false},
-      {value: 4, locked: false, rolling: false},
-      {value: 5, locked: false, rolling: false},
+      {value: 1, locked: false, rolling: 0},
+      {value: 2, locked: false, rolling: 0},
+      {value: 3, locked: false, rolling: 0},
+      {value: 4, locked: false, rolling: 0},
+      {value: 5, locked: false, rolling: 0},
     ],
     scoreCard:[
       {name:"Ones", possibleScore: 0, playerScore : [-1, -1, -1, -1]},
@@ -69,11 +69,13 @@ export default new Vuex.Store({
 
           if(!dice.locked){
 
-            Vue.set(dice, 'rolling', true);
+            let rollTimer = (Math.floor((Math.random() * 15) + 1) * 100);
+            let rollDirection = Math.floor((Math.random() * 2) + 1);
 
-            let rollTimer = (Math.floor((Math.random() * 15)+1) * 100);
+            Vue.set(dice, 'rolling', rollDirection);
+
             setTimeout(function () {
-              Vue.set(dice, 'rolling', false);
+              Vue.set(dice, 'rolling', 0);
             },rollTimer);
             //Set a random value between 1-6 (Roll a dice)
             let rolledDiceValue = Math.floor((Math.random() * 6) + 1);

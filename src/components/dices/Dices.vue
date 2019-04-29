@@ -18,8 +18,7 @@
       currentDices() {
         return this.$store.state.currentDices
       }
-    },
-
+    }
   }
 
 
