@@ -58,17 +58,18 @@ export default new Vuex.Store({
 
     rollDices: function(state){
 
-      if(state.rollNumber.current < 99){
-        // Reset array for dice values
-        state.diceValueArray = [];
+      if(state.rollNumber.current < 3){
 
-        //Reset all possible score values
+        //Reset values from former roll values
+        state.diceValueArray = [];
         state.scoreCard.forEach((dice)=>{ Vue.set(dice, 'possibleScore', 0)});
 
+        //Roll dices
         state.currentDices.forEach(function(dice) {
 
           if(!dice.locked){
 
+            //Set rolling animation
             let rollTimer = (Math.floor((Math.random() * 15) + 1) * 100);
             let rollDirection = Math.floor((Math.random() * 2) + 1);
 
@@ -77,7 +78,8 @@ export default new Vuex.Store({
             setTimeout(function () {
               Vue.set(dice, 'rolling', 0);
             },rollTimer);
-            //Set a random value between 1-6 (Roll a dice)
+
+            //Set random dice value
             let rolledDiceValue = Math.floor((Math.random() * 6) + 1);
 
             Vue.set(dice, 'value', rolledDiceValue);
@@ -89,10 +91,13 @@ export default new Vuex.Store({
         //Sort the dice value array and add it to a simplified name
         let sortedValues = state.diceValueArray.sort();
 
-        //Set a counting array for how many of each possible value there is.
+        //Set a counting array for how many of each possible value there is,
+        //(7 indexes because first index cant represent any dice concerning a bug discovered with calculating highest
+        // and second highest count values with only 6 indexes).
         let diceCount = [0,0,0,0,0,0,0];
+
+        //Increase the value of the index in the counting array that matches the value in dice value array
         for(let i = 0; i < sortedValues.length; i++){
-          //Increase the value of the index in the counting array that matches the value in dice value array
           diceCount[sortedValues[i]]++;
         }
 
@@ -109,14 +114,11 @@ export default new Vuex.Store({
 
           //Check each count value if they are higher than the current highest count
           if(diceCount[i] >= diceCount[highestCount1]){
-            //If so, set the second highest count to that of the former highest count
             highestCount2 = highestCount1;
-            //and set the highest count to the current index
             highestCount1 = i;
           }
           //Else, check if each count are higher than the second highest count
           else if(diceCount[i] >= diceCount[highestCount2]){
-            //If so, set the second highest count to the current index
             highestCount2 = i;
           }
         }
@@ -269,7 +271,7 @@ export default new Vuex.Store({
           winner = i;
         }
       }
-      console.log(winner);
+
       Vue.set(state.players, 'winner', winner);
     }
 
@@ -383,6 +385,7 @@ export default new Vuex.Store({
         });
 
         resolve();
+
       });
     },
 
