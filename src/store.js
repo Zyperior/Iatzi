@@ -208,21 +208,21 @@ export default new Vuex.Store({
         }
 
         if(
-          diceCount[0] > 0 &&
-          diceCount[1] > 0 &&
-          diceCount[2] > 0 &&
-          diceCount[3] > 0 &&
-          diceCount[4] > 0
-        ){
-          //Small straight
-          Vue.set(state.scoreCard[12], 'possibleScore', 15);
-        }
-        else if(
           diceCount[1] > 0 &&
           diceCount[2] > 0 &&
           diceCount[3] > 0 &&
           diceCount[4] > 0 &&
           diceCount[5] > 0
+        ){
+          //Small straight
+          Vue.set(state.scoreCard[12], 'possibleScore', 15);
+        }
+        else if(
+          diceCount[2] > 0 &&
+          diceCount[3] > 0 &&
+          diceCount[4] > 0 &&
+          diceCount[5] > 0 &&
+          diceCount[6] > 0
         ){
           //Large straight
           Vue.set(state.scoreCard[13], 'possibleScore', 20);
