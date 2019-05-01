@@ -57,11 +57,13 @@ export default new Vuex.Store({
     rollNumber : {current: 0},
     players : {amount: 1, current: -1, winner: -1},
     gameStarted : false,
-  },
-  methods:{
-
+    cardFlipped : false
   },
   mutations: {
+
+    flipCard: function(state){
+      state.cardFlipped = !state.cardFlipped
+    },
 
     setPlayerAmount: function(state, amount){
       state.players.amount = parseInt(amount);
