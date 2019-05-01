@@ -71,6 +71,11 @@
       border: solid black 0.5vmin;
     }
 
+    .error{
+      color: red;
+      font-size: 2.3vmin;
+    }
+
   }
 
 </style>

@@ -58,7 +58,7 @@
   .scoreColumn{
     display: flex;
     flex-direction: column;
-    min-height: 99%;
+
     align-items: center;
     justify-content: space-evenly;
   }
@@ -102,6 +102,7 @@
   }
 
   @media screen and (min-width: 1200px) and (orientation: landscape){
+
     .scoreGrid{
       display: grid;
       grid-template-columns: 40% repeat(4, auto);

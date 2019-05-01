@@ -2,7 +2,8 @@
   <div id="app" class="app">
     <section class="controls">
       <game-dices/>
-      <roll-dice-button/>
+      <roll-dice-button :invalid-amount="validAmount"/>
+      <select-players class="selectPlayers" v-if="!gameStarted" @amount-validation="amountValidation"/>
     </section>
     <score-card/>
   </div>
@@ -12,13 +13,30 @@
 import Dices from './components/dices/Dices'
 import RollDiceButton from './components/RollDice'
 import ScoreCard from './components/ScoreCard'
+import SelectPlayers from './components/SelectPlayers'
 
 export default {
   name: 'app',
   components: {
     'game-dices': Dices,
     'roll-dice-button': RollDiceButton,
-    'score-card': ScoreCard
+    'score-card': ScoreCard,
+    'select-players' : SelectPlayers
+  },
+  data(){
+    return{
+      validAmount : false
+    }
+  },
+  computed: {
+    gameStarted(){
+      return this.$store.state.gameStarted;
+    }
+  },
+  methods:{
+    amountValidation: function (e) {
+      this.validAmount = e;
+    }
   }
 }
 </script>
@@ -68,7 +86,12 @@ export default {
   }
 
   .controls{
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    grid-row-gap: 5vmin;
+    margin-bottom: 30vmin;
   }
 }
 

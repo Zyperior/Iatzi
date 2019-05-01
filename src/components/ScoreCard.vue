@@ -4,7 +4,7 @@
       <score-card-title/>
       <score-card-dices class="dices" v-if="gameStarted"/>
       <score-card-roll class="roll" :invalid-amount="validAmount"/>
-      <select-players class="playerSelect" v-if="!gameStarted" @invalid-amount="amountIsValid"/>
+      <select-players class="playerSelect" v-if="!gameStarted" @amount-validation="amountValidation"/>
     </section>
     <score-table/>
   </div>
@@ -37,7 +37,7 @@
       }
     },
     methods:{
-      amountIsValid: function (e) {
+      amountValidation: function (e) {
         this.validAmount = e;
       }
     }

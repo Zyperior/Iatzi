@@ -34,10 +34,10 @@
         amount(value) {
           this.$v.$touch();
           if(this.$v.$invalid){
-            this.$emit('invalid-amount', true);
+            this.$emit('amount-validation', true);
           }
           else{
-            this.$emit('invalid-amount', false);
+            this.$emit('amount-validation', false);
             this.$store.commit('setPlayerAmount', value)
           }
         }
