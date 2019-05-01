@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="(dice, index) in currentDices">
-      <Dice class="dice" v-bind:dice="dice" v-bind:index="index"></Dice>
+      <Dice class="dice" :dice="dice" :index="index"></Dice>
     </div>
   </div>
 </template>

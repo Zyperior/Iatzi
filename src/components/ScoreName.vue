@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:class="{bold : score.name === 'Bonus' || score.name === 'Total' || score.name ==='Players',
+  <div class="name" v-bind:class="{bold : score.name === 'Bonus' || score.name === 'Total' || score.name ==='Players',
                       possible : score.possibleScore > 0,
                       chosen: score.values[currentPlayer] > -1 &&
                       (score.name !== 'Total' && score.name !== 'Bonus')}"
@@ -25,6 +25,10 @@
 
 <style scoped>
 
+  .name:hover{
+    cursor: pointer;
+  }
+
   .bold{
     font-weight: bolder;
   }
@@ -37,6 +41,10 @@
   .chosen{
     color: rgb(213,211,198);
     font-weight: normal;
+  }
+
+  .chosen:hover{
+    cursor: not-allowed;
   }
 
 

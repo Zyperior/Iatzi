@@ -50,6 +50,10 @@
     background-color: white;
   }
 
+  .dice:hover{
+    cursor: pointer;
+  }
+
   .diceLocked{
     background-color: lightgreen;
   }

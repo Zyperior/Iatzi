@@ -1,9 +1,7 @@
 <template>
-
-    <div v-if="gameStarted" @click="rollDice"><div>Roll dices {{rollNumber.current}} / 3</div></div>
+    <div class="clickable" v-if="gameStarted" @click="rollDice"><div>Roll dices {{rollNumber.current}} / 3</div></div>
     <div class="error" v-else-if="invalidAmount"><div>Player amount must be between 1 - 4</div></div>
-    <div v-else @click="startGame"><div>Start game!</div></div>
-
+    <div class="clickable" v-else @click="startGame"><div>Start game!</div></div>
 </template>
 
 <script>
@@ -39,6 +37,10 @@
 </script>
 
 <style scoped>
+
+  .clickable:hover{
+    cursor: pointer;
+  }
 
   .error{
     color: red;
