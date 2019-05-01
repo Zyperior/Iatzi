@@ -3,8 +3,7 @@
     diceLocked : dice.locked,
     animation1 : dice.rolling === 1,
     animation2 : dice.rolling === 2
-    }"
-       @click="lockDice(index)">
+    }" @click="lockDice(index)">
     <DiceMark class="CenterMark" v-bind:dice-index="index" v-if="dice.value === 1 || dice.value === 3 || dice.value === 5 || !gameStarted"></DiceMark>
     <DiceMark class="UppLeftMark" v-if="dice.value > 1 && gameStarted"></DiceMark>
     <DiceMark class="LowRightMark" v-if="dice.value > 1 && gameStarted"></DiceMark>
@@ -46,13 +45,8 @@
     display: grid;
     grid-template-columns: repeat(3, 4vmin);
     grid-template-rows: repeat(3, 4vmin);
-    max-width: 12vmin;
     justify-items: center;
     align-items: center;
-
-    border: solid black 1vmin;
-    border-radius: 1vmin;
-
     background-color: white;
   }
 
@@ -122,24 +116,4 @@
     }
   }
 
-  @media screen and (min-width: 1200px) and (orientation: landscape){
-    .dice{
-      display: grid;
-      grid-template-columns: repeat(3, 4vmin);
-      grid-template-rows: repeat(3, 4vmin);
-      max-width: 12vmin;
-      min-width: 12vmin;
-      justify-items: center;
-      align-items: center;
-
-      border: solid black 1vmin;
-      border-radius: 1vmin;
-
-      background-color: white;
-    }
-
-    .diceLocked{
-      background-color: lightgreen;
-    }
-  }
 </style>

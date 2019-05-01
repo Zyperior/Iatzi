@@ -1,9 +1,11 @@
 <template>
   <div id="app" class="app">
     <section class="controls">
-      <game-dices/>
-      <roll-dice-button :invalid-amount="validAmount"/>
-      <select-players class="selectPlayers" v-if="!gameStarted" @amount-validation="amountValidation"/>
+      <game-dices class="dices"/>
+      <roll-dice-button class="rollButton" :invalid-amount="validAmount"/>
+      <label v-if="!gameStarted">
+        Players<select-players class="selectPlayers" v-if="!gameStarted" @amount-validation="amountValidation"/>
+      </label>
     </section>
     <score-card/>
   </div>
@@ -48,11 +50,13 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin-left: 0;
   text-align: center;
-  color: #2c3e50;
-
 }
+
+.controls{
+  display: none;
+}
+
 
 @media screen and (min-width: 300px) and (orientation: landscape) {
 
@@ -64,7 +68,6 @@ export default {
     overflow-x: hidden;
     position: absolute;
     top: 100%;
-    left: 0;
   }
 }
 
@@ -76,7 +79,6 @@ export default {
     position: relative;
     overflow-x: visible;
     top: 0;
-    left: 0;
   }
 
   .app {
@@ -92,7 +94,42 @@ export default {
     align-items: center;
     grid-row-gap: 5vmin;
     margin-bottom: 30vmin;
+    font-size: 2vmin;
   }
+
+  .dices{
+    display: flex;
+    margin-top:10vmin;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 50vmin;
+    min-width: 50vmin;
+    grid-gap: 1vmax;
+  }
+
+  .dices > :nth-child(-n+3){
+    align-self: flex-end;
+  }
+
+  .rollButton{
+    display: flex;
+    min-width: 20vmax;
+    max-width: 20vmax;
+    min-height: 5vmin;
+    font-size: 4vmin;
+    justify-content: center;
+    align-items: center;
+    border: solid black 0.4vmin;
+  }
+
+  .selectPlayers{
+    max-width: 2vmin;
+    font-size: 2vmin;
+    padding-left: 1vmin;
+    margin-left: 1vmin;
+  }
+
+
 }
 
 </style>

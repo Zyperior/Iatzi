@@ -1,7 +1,7 @@
 <template>
-  <div class="dices">
+  <div>
     <div v-for="(dice, index) in currentDices">
-      <Dice v-bind:dice="dice" v-bind:index="index"></Dice>
+      <Dice class="dice" v-bind:dice="dice" v-bind:index="index"></Dice>
     </div>
   </div>
 </template>
@@ -26,26 +26,11 @@
 
 <style scoped>
 
-  .dices{
-    display: grid;
-    grid-template-columns: repeat(5, 15vmin);
-    justify-self: center;
-    justify-content: center;
+  .dice{
+    max-width: 12vmin;
+    min-width: 12vmin;
+    border: solid black 1vmin;
+    border-radius: 1vmin;
   }
 
-  @media screen and (min-width: 1200px) and (orientation: landscape){
-
-    .dices{
-      display: flex;
-      margin-top:10vmin;
-      flex-wrap: wrap;
-      max-width: 50vmin;
-      min-width: 50vmin;
-      grid-gap: 1vmax;
-    }
-
-    .dices > :nth-child(-n+3){
-      align-self: flex-end;
-    }
-  }
 </style>

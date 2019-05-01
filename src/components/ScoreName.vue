@@ -25,6 +25,10 @@
 
 <style scoped>
 
+  .bold{
+    font-weight: bolder;
+  }
+
   .possible{
     color: green;
     font-weight: bold;
@@ -35,9 +39,5 @@
     font-weight: normal;
   }
 
-  @media screen and (min-width: 1200px) and (orientation: landscape){
-
-
-  }
 
 </style>

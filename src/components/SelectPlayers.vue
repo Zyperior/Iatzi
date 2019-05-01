@@ -1,7 +1,5 @@
 <template>
-  <label>
-    Players <input class="inputField" type="text" maxlength="1" min="1" max="4" v-model="amount" @keydown="validateInput">
-  </label>
+     <input class="inputField" type="text" maxlength="1" min="1" max="4" v-model="amount" @keydown="validateInput">
 </template>
 
 <script>
@@ -45,11 +43,3 @@
     }
 </script>
 
-<style scoped>
-
-  .inputField{
-    max-width: 6vmin;
-    padding-left: 4vmin;
-  }
-
-</style>

@@ -19,9 +19,6 @@
   .title{
     display: grid;
     grid-template-columns: repeat(5, auto);
-    padding-top: 2vmax;
-    max-height: 7vmax;
-    justify-self: center;
   }
 
   img{

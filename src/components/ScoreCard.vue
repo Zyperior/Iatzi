@@ -1,10 +1,11 @@
 <template>
   <div class="scoreCard">
     <section class="header">
-      <score-card-title/>
+      <score-card-title class="title"/>
       <score-card-dices class="dices" v-if="gameStarted"/>
-      <score-card-roll class="roll" :invalid-amount="validAmount"/>
-      <select-players class="playerSelect" v-if="!gameStarted" @amount-validation="amountValidation"/>
+      <score-card-roll class="scoreCardButton" :invalid-amount="validAmount"/>
+      <label v-if="!gameStarted">Players<select-players class="playerSelect" v-if="!gameStarted" @amount-validation="amountValidation"/>
+      </label>
     </section>
     <score-table/>
   </div>
@@ -64,6 +65,39 @@
     grid-template-rows: 8vmax 9vmax 5vmax;
   }
 
+  .title{
+    padding-top: 2vmax;
+    max-height: 7vmax;
+    justify-self: center;
+  }
+
+  .dices{
+    display: grid;
+    grid-template-columns: repeat(5, 15vmin);
+    justify-self: center;
+    justify-content: center;
+  }
+
+  .scoreCardButton{
+    display: flex;
+    min-width: 73vmin;
+    min-height: 5vmax;
+    max-width: 73vmin;
+    background-color: white;
+    justify-self: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 4vmax;
+    border: solid black 1vmin;
+    margin-bottom: 2vmax;
+  }
+
+  .playerSelect{
+    max-width: 6vmin;
+    padding-left: 4vmin;
+    margin-left: 2vmin;
+  }
+
   @media screen and (min-width: 1200px) and (orientation: landscape) {
 
     .scoreCard{
@@ -77,18 +111,22 @@
     }
 
     .header{
-      grid-template-rows: 1vmin;
+      grid-template-rows: auto;
     }
 
     .dices {
       display: none;
     }
 
-    .roll{
+    .scoreCardButton{
       display: none;
     }
 
     .playerSelect{
+      display: none;
+    }
+
+    label{
       display: none;
     }
 

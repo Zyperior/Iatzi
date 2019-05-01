@@ -1,9 +1,9 @@
 <template>
-  <section class="buttonContainer">
-    <div class="rollButton" v-if="gameStarted" @click="rollDice">Roll dices {{rollNumber.current}} / 3</div>
-    <div class="rollButton error" v-else-if="invalidAmount">Player amount must be between 1 - 4</div>
-    <div class="rollButton" v-else @click="startGame">Start game!</div>
-  </section>
+
+    <div v-if="gameStarted" @click="rollDice"><div>Roll dices {{rollNumber.current}} / 3</div></div>
+    <div class="error" v-else-if="invalidAmount"><div>Player amount must be between 1 - 4</div></div>
+    <div v-else @click="startGame"><div>Start game!</div></div>
+
 </template>
 
 <script>
@@ -15,15 +15,6 @@
         startButtonText : 'Start Game',
       }
     },
-    methods:{
-      rollDice(){
-        this.$store.commit('rollDices')
-      },
-      startGame(){
-        this.$store.commit('startGame')
-      },
-
-    },
     computed:{
       gameStarted(){
         return this.$store.state.gameStarted
@@ -32,28 +23,22 @@
       rollNumber: function () {
         return this.$store.state.rollNumber;
       }
+    },
+    methods:{
+      rollDice(){
+        this.$store.commit('rollDices')
+      },
+      startGame(){
+        this.$store.commit('startGame')
+      },
+
     }
+
   }
 
 </script>
 
 <style scoped>
-
-  .buttonContainer{
-    justify-self: center;
-  }
-
-  .rollButton{
-    display: flex;
-    min-width: 73vmin;
-    min-height: 5vmax;
-    max-width: 73vmin;
-    background-color: white;
-    justify-content: center;
-    align-items: center;
-    font-size: 4vmax;
-    border: solid black 1vmin;
-  }
 
   .error{
     color: red;
@@ -62,17 +47,7 @@
 
   @media screen and (min-width: 1200px) and (orientation: landscape){
 
-    .rollButton{
-      display: flex;
-      min-width: 20vmax;
-      max-width: 20vmax;
-      min-height: 5vmin;
-      font-size: 4vmin;
-      border: solid black 0.5vmin;
-    }
-
     .error{
-      color: red;
       font-size: 2.3vmin;
     }
 
