@@ -53,7 +53,7 @@
 
   .scoreGrid{
     display: grid;
-    grid-template-columns: 37% repeat(4, auto);
+    grid-template-columns: 38% repeat(4, 15.5%);
     grid-template-rows: auto;
   }
 
@@ -75,16 +75,22 @@
     border-bottom: thin solid rgb(213,211,198);
     padding-left: 5%;
     min-height: 5%;
+    max-height: 5%;
   }
 
   .scoreValue{
     border-bottom: thin solid rgb(213,211,198);
+    max-width: 80%;
     min-width: 80%;
     min-height: 5%;
+    max-height: 5%;
+
   }
 
   .topRowValue{
     min-width: 100%;
+    min-height: 5%;
+    max-height: 5%;
     border-top: thin solid black;
     border-bottom: thin solid black;
   }
@@ -92,6 +98,8 @@
   .topRowName{
     min-width: 100%;
     margin-left: 5%;
+    min-height: 5%;
+    max-height: 5%;
     border-top: thin solid black;
     border-bottom: thin solid black;
   }
@@ -113,11 +121,8 @@
   @media screen and (min-width: 1200px) and (orientation: landscape){
 
     .scoreGrid{
-      display: grid;
-      grid-template-columns: 40% repeat(4, auto);
-      grid-template-rows: auto;
       margin-top: 4vmin;
-      font-size: 2.5vmin;
+      font-size: 2.4vmin;
     }
 
     .scoreColumn{

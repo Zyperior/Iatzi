@@ -1,5 +1,5 @@
 <template>
-     <input class="inputField" type="text" maxlength="1" min="1" max="4" v-model="amount" @keydown="validateInput">
+     <input class="inputField" type="text" maxlength="1" min="1" max="4" v-model="amount">
 </template>
 
 <script>
@@ -16,16 +16,6 @@
         amount:{
           required,
           numeric: between(1,4),
-        }
-      },
-      methods:{
-        validateInput(e){
-          if(e.key !== 'Backspace'){
-            let char = String.fromCharCode(e.which);
-            if(!(/[1-4]/).test(char)){
-              e.preventDefault();
-            }
-          }
         }
       },
       watch: {
