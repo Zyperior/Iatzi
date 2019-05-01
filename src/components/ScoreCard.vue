@@ -2,9 +2,9 @@
   <div class="scoreCard">
     <section class="header">
       <score-card-title/>
-      <score-card-dices v-if="gameStarted" class="dices"/>
+      <score-card-dices class="dices" v-if="gameStarted"/>
       <score-card-roll class="roll" :invalid-amount="validAmount"/>
-      <select-players v-if="!gameStarted" @invalid-amount="amountIsValid"/>
+      <select-players class="playerSelect" v-if="!gameStarted" @invalid-amount="amountIsValid"/>
     </section>
     <score-table/>
   </div>
@@ -48,6 +48,7 @@
 
   .scoreCard{
     display: grid;
+    grid-template-rows: auto 70%;
     width: 95vmin;
     height: 97vmax;
     position: fixed;
@@ -63,14 +64,32 @@
     grid-template-rows: 8vmax 9vmax 5vmax;
   }
 
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1200px) and (orientation: landscape) {
+
+    .scoreCard{
+      position: relative;
+      z-index: 0;
+      width: 25vmax;
+      height: 90vmin;
+      grid-template-rows: auto 80%;
+      box-shadow: 1vmin 1vmin 1vmin gray;
+      margin-top: 3vmin;
+    }
+
+    .header{
+      grid-template-rows: 1vmin;
+    }
 
     .dices {
-      display: none
+      display: none;
     }
 
     .roll{
-      display: none
+      display: none;
+    }
+
+    .playerSelect{
+      display: none;
     }
 
   }

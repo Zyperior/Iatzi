@@ -60,4 +60,17 @@
     font-size: 2.5vmax;
   }
 
+  @media screen and (min-width: 1200px) and (orientation: landscape){
+
+    .rollButton{
+      display: flex;
+      min-width: 20vmax;
+      max-width: 20vmax;
+      min-height: 5vmin;
+      font-size: 4vmin;
+      border: solid black 0.5vmin;
+    }
+
+  }
+
 </style>

@@ -1,7 +1,9 @@
 <template>
   <div id="app" class="app">
-    <game-dices/>
-    <roll-dice-button/>
+    <section class="controls">
+      <game-dices/>
+      <roll-dice-button/>
+    </section>
     <score-card/>
   </div>
 </template>
@@ -28,12 +30,15 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin-left: 0;
   text-align: center;
   color: #2c3e50;
-  justify-content: center;
+
 }
 
 @media screen and (min-width: 300px) and (orientation: landscape) {
+
+  /*Orientation lock if smaller screen and landscape*/
   html {
     transform: rotate(-90deg);
     transform-origin: left top;
@@ -46,13 +51,24 @@ export default {
 }
 
 @media screen and (min-width: 1200px) and (orientation: landscape) {
+
+  /*Reset orientation lock if larger screen*/
   html {
     transform: none;
-    width: 100vh;
-    position: absolute;
+    position: relative;
     overflow-x: visible;
     top: 0;
-    left: 50%;
+    left: 0;
+  }
+
+  .app {
+    grid-template-columns: auto auto;
+    margin-left: 20vmax;
+    grid-column-gap: 5vmax;
+  }
+
+  .controls{
+    display: grid;
   }
 }
 

@@ -1,7 +1,7 @@
 <template>
-  <div v-bind:class="{bold : score.name === 'Bonus' || score.name === 'Total',
+  <div v-bind:class="{bold : score.name === 'Bonus' || score.name === 'Total' || score.name ==='Players',
                       possible : score.possibleScore > 0,
-                      chosen: score.playerScore[currentPlayer] > -1 &&
+                      chosen: score.values[currentPlayer] > -1 &&
                       (score.name !== 'Total' && score.name !== 'Bonus')}"
                       @click="setScore">{{score.name}}</div>
 </template>
@@ -25,11 +25,6 @@
 
 <style scoped>
 
-  div{
-    border-bottom: thin solid rgb(213,211,198);
-    min-height: 3vmax;
-  }
-
   .possible{
     color: green;
     font-weight: bold;
@@ -38,6 +33,11 @@
   .chosen{
     color: rgb(213,211,198);
     font-weight: normal;
+  }
+
+  @media screen and (min-width: 1200px) and (orientation: landscape){
+
+
   }
 
 </style>

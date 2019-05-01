@@ -15,6 +15,7 @@
 </script>
 
 <style scoped>
+
   .title{
     display: grid;
     grid-template-columns: repeat(5, auto);
@@ -22,8 +23,10 @@
     max-height: 7vmax;
     justify-self: center;
   }
+
   img{
     max-height: 4vmax;
     margin-right: 1vmin;
   }
+
 </style>

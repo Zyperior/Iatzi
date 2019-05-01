@@ -122,7 +122,24 @@
     }
   }
 
-  @media screen {
+  @media screen and (min-width: 1200px) and (orientation: landscape){
+    .dice{
+      display: grid;
+      grid-template-columns: repeat(3, 4vmin);
+      grid-template-rows: repeat(3, 4vmin);
+      max-width: 12vmin;
+      min-width: 12vmin;
+      justify-items: center;
+      align-items: center;
 
+      border: solid black 1vmin;
+      border-radius: 1vmin;
+
+      background-color: white;
+    }
+
+    .diceLocked{
+      background-color: lightgreen;
+    }
   }
 </style>
