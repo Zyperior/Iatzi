@@ -1,6 +1,7 @@
 <template>
   <div class="scoreCard">
     <section class="header">
+      <div class="flipCard">Flip -></div>
       <score-card-title class="title"/>
       <score-card-dices class="dices" v-if="gameStarted"/>
       <score-card-roll class="scoreCardButton" :invalid-amount="validAmount"/>
