@@ -354,16 +354,16 @@ export default new Vuex.Store({
               notYetChosen++;
               current = 0;
             }
-
             sum = sum + current;
           }
 
-          if(sum > 66){
+          if(sum > 62){
             Vue.set(state.scoreCard[7].values, playerID,50);
           }
           else if(notYetChosen === 0){
             Vue.set(state.scoreCard[7].values, playerID,0);
           }
+
         }
         resolve();
       });

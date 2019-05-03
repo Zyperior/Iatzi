@@ -45,7 +45,7 @@
           <br>
           Bonus -<br>
           Bonus will grant the player 50 points if the player can
-          reach a total of 67 points or more in the first 6 scores
+          reach a total of 63 points or more in the first 6 scores
           on the score table. Anything below, will yield 0 points.<br>
           <br>
           Good Luck!
@@ -151,6 +151,13 @@
 
   .flipButtonFront{
     justify-self: flex-end;
+    max-height: 100%;
+    margin-right: 1vmin;
+    margin-top: 1vmin;
+  }
+
+  .flipButtonFront:hover{
+    color: blue;
   }
 
   .title{
@@ -198,6 +205,9 @@
 
   .flipButtonBack{
     justify-self: flex-start;
+    max-height: 100%;
+    margin-left: 1vmin;
+    margin-top: 1vmin;
   }
 
   .rulesTitle{
