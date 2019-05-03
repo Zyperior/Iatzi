@@ -1,7 +1,7 @@
 # iatzi
-Frameworks: Vue, Vuex, Vuelidate, Vue CLI
+Frameworks: Vue, Vuex, Vuelidate, Vue CLI<br>
 <br>
-Dev. environment: Node.js
+Dev. environment: Node.js<br>
 Dev. test environment: Firefox 66.0.3 (64)<br>
 Tested for small screen (=Iphone 6/7/8)<br>
 Tested for desktop (min width 1200px)<br>
