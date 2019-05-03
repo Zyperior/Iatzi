@@ -291,7 +291,7 @@ export default new Vuex.Store({
     setScore: function({state}, index){
       if(state.rollNumber.current > 0){
         if(index !== 7 && index !== 17){
-          console.log(index);
+
           if(state.scoreCard[index].values[state.players.current] < 0){
 
             Vue.set(state.scoreCard[index].values, state.players.current, state.scoreCard[index].possibleScore);
@@ -390,17 +390,15 @@ export default new Vuex.Store({
 
       return new Promise((resolve, reject) => {
         let lastPlayer = state.players.amount-1;
-        state.scoreCard.forEach((score)=>{
-
-          if(score.values[lastPlayer] === -1){
-            reject();
+        state.scoreCard.forEach((score) => {
+          if (score.values[lastPlayer] === -1) {
+            reject()
           }
         });
 
-        resolve();
+        resolve()
 
-      });
-    },
-
+      })
+    }
   }
 })
