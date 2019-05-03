@@ -32,32 +32,11 @@ export default new Vuex.Store({
       {name:"Iatzi",           possibleScore: 0, values : [-1, -1, -1, -1]},
       {name:"Total",           possibleScore: 0, values : [-1, -1, -1, -1]},
     ],
-    //Used for testing end game functionality, css with full scoreboard etc..
-    scoreCardtest:[
-      {name:"Players",         possibleScore: 0, values : ['A', 'B', 'C', 'D']},
-      {name:"Ones",            possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Twos",            possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Threes",          possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Fours",           possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Fives",           possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Sixes",           possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Bonus",           possibleScore: 0, values : [50, 50, 50, 50]},
-      {name:"Pair",            possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Two-Pair",        possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Three of a kind", possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Four of a kind",  possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Small straight",  possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Large straight",  possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Full house",      possibleScore: 0, values : [10, 10, 10, 10]},
-      {name:"Chance",          possibleScore: 0, values : [-1, -1, -1, -1]},
-      {name:"Iatzi",           possibleScore: 0, values : [50, 50, 50, 50]},
-      {name:"Total",           possibleScore: 0, values : [-1, -1, -1, -1]},
-    ],
     diceValueArray : [],
-    rollNumber : {current: 0},
-    players : {amount: 1, current: -1, winner: -1},
-    gameStarted : false,
-    cardFlipped : false
+    rollNumber     : {current: 0},
+    players        : {amount: 1, current: -1, winner: -1},
+    gameStarted    : false,
+    cardFlipped    : false
   },
   mutations: {
 
@@ -86,7 +65,6 @@ export default new Vuex.Store({
 
         //Reset values from former roll values
         state.diceValueArray = [];
-        state.scoreCard.forEach((score)=>{ Vue.set(score, 'possibleScore', 0)});
 
         //Roll dices
         state.currentDices.forEach(function(dice) {
@@ -112,7 +90,6 @@ export default new Vuex.Store({
           state.diceValueArray.push(dice.value)
         });
 
-        //Sort the dice value array and add it to a simplified name
         let sortedValues = state.diceValueArray.sort();
 
         //Set a counting array for how many of each possible value there is,
@@ -147,6 +124,7 @@ export default new Vuex.Store({
           }
         }
 
+        //Below each if-block checks the possible combinations and values
         if(diceCount[highestCount1] === 5){
 
           //Iatzi
@@ -266,23 +244,28 @@ export default new Vuex.Store({
 
     },
 
+    //Reset all possible scores, locked dices and roll number
+    //Go to next player, (if above players amount, go to first player).
     nextPlayer: function(state){
+
+      state.scoreCard.forEach((score)=>{ Vue.set(score, 'possibleScore', 0)});
 
       state.currentDices.forEach((dice)=> {
         dice.locked = false;
       });
+
       Vue.set(state.rollNumber, 'current', 0);
 
       let nextPlayer = state.players.current + 1;
 
       if(nextPlayer === state.players.amount){
         nextPlayer = 0;
-
       }
 
       Vue.set(state.players,'current', nextPlayer);
     },
 
+    //Compare each players total score, set winner to to the player index with the highest score
     winControl: function(state){
 
       let totalScore = state.scoreCard[17];
@@ -370,6 +353,9 @@ export default new Vuex.Store({
 
     },
 
+    //Loop through each value for current player
+    //Sum them (if not yet chosen, add 0)
+    //If score name is total, set it to the sum
     sumTotal: function({state}, playerID) {
 
       return new Promise(resolve => {
@@ -398,6 +384,8 @@ export default new Vuex.Store({
 
     },
 
+    //Check if the last player have score values not yet set
+    //If so reject else resolve.
     endGameControl: function({state}){
 
       return new Promise((resolve, reject) => {
