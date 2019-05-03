@@ -1,3 +1,7 @@
+<!--Representation: The score name
+    Functionality: Apply the score to the active player, visual help for available scores
+    CSS: Base visuals
+    Author: Andreas Albihn, 2019-->
 <template>
   <div class="name" v-bind:class="{bold : score.name === 'Bonus' || score.name === 'Total' || score.name ==='Players',
                       possible : score.possibleScore > 0,

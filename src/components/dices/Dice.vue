@@ -1,3 +1,8 @@
+<!--Representation: A Dice
+    Functionality: Lock dice, roll animation
+    CSS: Base visual & dice mark location
+    Animation: Roll either left or right
+    Author: Andreas Albihn, 2019-->
 <template>
   <div class="dice" v-bind:class="{
     diceLocked : dice.locked,
@@ -36,7 +41,6 @@
           this.$store.commit('lockDice', index)
         }
       }
-
     }
 </script>
 
@@ -48,6 +52,10 @@
     justify-items: center;
     align-items: center;
     background-color: white;
+    max-width: 12vmin;
+    min-width: 12vmin;
+    border: solid black 1vmin;
+    border-radius: 1vmin;
   }
 
   .dice:hover{

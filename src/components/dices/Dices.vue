@@ -1,3 +1,5 @@
+<!--Representation: All dices
+    Author: Andreas Albihn, 2019-->
 <template>
   <div>
     <div v-for="(dice, index) in currentDices">
@@ -23,14 +25,3 @@
 
 
 </script>
-
-<style scoped>
-
-  .dice{
-    max-width: 12vmin;
-    min-width: 12vmin;
-    border: solid black 1vmin;
-    border-radius: 1vmin;
-  }
-
-</style>

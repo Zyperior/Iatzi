@@ -1,3 +1,7 @@
+<!--Representation: The scorecard front- and back face
+    CSS: Base visual & specific visuals for all components on the score card
+    Animation: Flip
+    Author: Andreas Albihn, 2019-->
 <template>
   <div class="flip-container" :class="{flip : cardFlipped}">
     <div class="flipper">

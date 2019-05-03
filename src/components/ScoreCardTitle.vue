@@ -1,10 +1,13 @@
+<!--Representation: The title
+    CSS: Base visuals
+    Author: Andreas Albihn, 2019-->
 <template>
   <div class="title">
-    <img src='../assets/diceI.svg' >
-    <img src='../assets/diceA.svg' >
-    <img src='../assets/diceT.svg' >
-    <img src='../assets/diceZ.svg' >
-    <img src='../assets/diceI.svg' >
+    <img src='../assets/diceI.svg' alt="">
+    <img src='../assets/diceA.svg' alt="">
+    <img src='../assets/diceT.svg' alt="">
+    <img src='../assets/diceZ.svg' alt="">
+    <img src='../assets/diceI.svg' alt="">
   </div>
 </template>
 

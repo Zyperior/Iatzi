@@ -1,3 +1,6 @@
+<!--Representation: Roll dice button
+    Functionality: Start the game or roll the dices, show error text if player amount is invalid
+    Author: Andreas Albihn, 2019-->
 <template>
     <div class="clickable" v-if="gameStarted" @click="rollDice"><div>Roll dices {{rollNumber.current}} / 3</div></div>
     <div class="error" v-else-if="invalidAmount"><div>Player amount must be between 1 - 4</div></div>

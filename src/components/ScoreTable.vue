@@ -1,3 +1,7 @@
+<!--Representation: The score table on the scorecard
+    Functionality: Visual help to show which player is active, visual help to show who won
+    CSS: Complete visuals
+    Author: Andreas Albihn, 2019-->
 <template>
     <div class="scoreGrid">
       <div class="scoreColumn">

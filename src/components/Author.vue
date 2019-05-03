@@ -1,3 +1,7 @@
+<!--Representation: The author signature
+    Functionality: Link to portfolio
+    CSS: Complete visual, image restrictions
+    Author: Andreas Albihn, 2019-->
 <template>
   <div>
     <div class="sign">Created by - Andreas Albihn ITHS - 2019</div>

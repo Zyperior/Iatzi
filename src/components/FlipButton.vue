@@ -1,5 +1,8 @@
+<!--Representation: Flip score card button
+    Functionality: Flip the card
+    Author: Andreas Albihn, 2019-->
 <template>
-    <img src="../assets/flipArrow.svg" alt="" @click="flipCard">
+  <div @click="flipCard">Flip</div>
 </template>
 
 <script>
@@ -13,8 +16,3 @@
     }
 </script>
 
-<style scoped>
-  img{
-    max-height: 100%;
-  }
-</style>
