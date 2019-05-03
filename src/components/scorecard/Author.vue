@@ -5,8 +5,8 @@
 <template>
   <div>
     <div class="sign">Created by - Andreas Albihn ITHS - 2019</div>
-    <a href="https://www.linkedin.com/in/andreas-albihn/" target="_blank"><img src="../assets/linkedIn.png" alt=""></a>
-    <a href="https://github.com/Zyperior" target="_blank"><img src="../assets/GitHub.svg" alt=""></a>
+    <a href="https://www.linkedin.com/in/andreas-albihn/" target="_blank"><img src="../../assets/linkedIn.png" alt=""></a>
+    <a href="https://github.com/Zyperior" target="_blank"><img src="../../assets/GitHub.svg" alt=""></a>
   </div>
 </template>
 

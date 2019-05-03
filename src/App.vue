@@ -13,9 +13,9 @@
 
 <script>
 import Dices from './components/dices/Dices'
-import RollDiceButton from './components/RollDice'
-import ScoreCard from './components/ScoreCard'
-import SelectPlayers from './components/SelectPlayers'
+import RollDiceButton from './components/controls/RollDice'
+import ScoreCard from './components/scorecard/ScoreCard'
+import SelectPlayers from './components/controls/SelectPlayers'
 
 export default {
   name: 'app',
