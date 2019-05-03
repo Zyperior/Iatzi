@@ -30,6 +30,20 @@ export default {
       validAmount : false
     }
   },
+  //Key events for locking dices with key 1-5
+  created() {
+    document.addEventListener('keyup', (e)=>{
+      let key = e.key;
+      if(key === '1' ||
+         key === '2' ||
+         key === '3' ||
+         key === '4' ||
+         key === '5'){
+
+        this.$store.commit('lockDice', key-1)
+      }
+    });
+  },
   computed: {
     gameStarted(){
       return this.$store.state.gameStarted;
@@ -38,7 +52,7 @@ export default {
   methods:{
     amountValidation: function (e) {
       this.validAmount = e;
-    }
+    },
   }
 }
 </script>
@@ -128,8 +142,5 @@ export default {
     padding-left: 1vmin;
     margin-left: 1vmin;
   }
-
-
 }
-
 </style>
