@@ -1,4 +1,13 @@
 # iatzi
+Frameworks: Vue, Vuex, Vuelidate, Vue CLI
+<br>
+Dev. environment: Node.js
+Dev. test environment: Firefox 66.0.3 (64)<br>
+Tested for small screen (=Iphone 6/7/8)<br>
+Tested for desktop (min width 1200px)<br>
+<br>
+Hosted @ <a href="https://zyperior.github.io" target="_blank">Github</a>
+
 
 ## Project setup
 ```
